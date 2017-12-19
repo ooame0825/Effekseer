@@ -475,7 +475,7 @@
     <value>画面拡大率</value>
   </data>
   <data name="ImageFilter" xml:space="preserve">
-    <value>画像ファイル (*.png)|*.png</value>
+    <value>画像ファイル (*.png,tga)|*.png;*.tga</value>
   </data>
   <data name="ModelFilter" xml:space="preserve">
     <value>モデルファイル (*.efkmodel,fbx,mqo)|*.efkmodel;*.fbx;*mqo</value>

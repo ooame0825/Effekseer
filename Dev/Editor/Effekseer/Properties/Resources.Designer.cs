@@ -577,7 +577,7 @@ namespace Effekseer.Properties {
         }
         
         /// <summary>
-        ///   画像ファイル (*.png)|*.png に類似しているローカライズされた文字列を検索します。
+        ///   画像ファイル (*.png,tga)|*.png;*.tga に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ImageFilter {
             get {

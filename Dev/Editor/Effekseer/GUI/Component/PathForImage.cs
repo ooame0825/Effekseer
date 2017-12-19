@@ -92,53 +92,122 @@ namespace Effekseer.GUI.Component
 			}
 		}
 
-		void UpdatePreview(string path)
-		{
+        void UpdatePreview(string path)
+        {
             if (!System.IO.File.Exists(path))
             {
                 return;
             }
 
-			try
-			{
-				Bitmap srcbmp = new Bitmap(binding.GetAbsolutePath());
-				lbl_info.Text = "" + srcbmp.Width + "x" + srcbmp.Height + " " + srcbmp.PixelFormat.ToString();
+            try
+            {
+                // ミニ窓用のデータ読み込み
+                // 拡張子で png 判定
+                if (binding.GetAbsolutePath().Contains(".png") == true)
+                {
+                    Bitmap srcbmp = new Bitmap(binding.GetAbsolutePath());
+                    lbl_info.Text = "" + srcbmp.Width + "x" + srcbmp.Height + " " + srcbmp.PixelFormat.ToString();
 
-				int height = (128 <= srcbmp.Height) ? 128 : srcbmp.Height;
-				int width = srcbmp.Width * height / srcbmp.Height;
-				Bitmap dstbmp = new Bitmap(width, height);
-				Graphics g = Graphics.FromImage(dstbmp);
-				// 市松模様を描画
-				for (int i = 0; i < height / 16; i++)
-				{
-					for (int j = 0; j < width / 16; j++)
-					{
-						g.FillRectangle(Brushes.White, j * 16, i * 16, 8, 8);
-						g.FillRectangle(Brushes.LightGray, j * 16, i * 16 + 8, 8, 8);
-						g.FillRectangle(Brushes.LightGray, j * 16 + 8, i * 16, 8, 8);
-						g.FillRectangle(Brushes.White, j * 16 + 8, i * 16 + 8, 8, 8);
-					}
-				}
-				// 画像を描画
-				g.DrawImage(srcbmp, 0, 0, width, height);
-				g.Dispose();
+                    int height = (128 <= srcbmp.Height) ? 128 : srcbmp.Height;
+                    int width = srcbmp.Width * height / srcbmp.Height;
+                    Bitmap dstbmp = new Bitmap(width, height);
+                    Graphics g = Graphics.FromImage(dstbmp);
+                    // 市松模様を描画
+                    for (int i = 0; i < height / 16; i++)
+                    {
+                        for (int j = 0; j < width / 16; j++)
+                        {
+                            g.FillRectangle(Brushes.White, j * 16, i * 16, 8, 8);
+                            g.FillRectangle(Brushes.LightGray, j * 16, i * 16 + 8, 8, 8);
+                            g.FillRectangle(Brushes.LightGray, j * 16 + 8, i * 16, 8, 8);
+                            g.FillRectangle(Brushes.White, j * 16 + 8, i * 16 + 8, 8, 8);
+                        }
+                    }
+                    // 画像を描画
+                    g.DrawImage(srcbmp, 0, 0, width, height);
+                    g.Dispose();
 
-				pic_preview.Width = width;
-				pic_preview.Height = height;
-				pic_preview.Image = dstbmp;
-				srcbmp.Dispose();
+                    pic_preview.Width = width;
+                    pic_preview.Height = height;
+                    pic_preview.Image = dstbmp;
+                    srcbmp.Dispose();
 
-				//this.Height = 40 + height;
-			}
-			catch (Exception e)
-			{
+                    //this.Height = 40 + height;
+                }
+                // 拡張子で tga 判定
+                else if (binding.GetAbsolutePath().Contains(".tga") == true)
+                {
+                    // ファイルを開いてバイナリで読み込み
+                    System.IO.FileStream fs = null;
+
+                    fs = System.IO.File.Open(
+                        binding.GetAbsolutePath(),
+                        System.IO.FileMode.Open,
+                        System.IO.FileAccess.Read,
+                        System.IO.FileShare.Read);
+
+                    var br = new System.IO.BinaryReader(fs);
+
+                    // ヘッダー部読み込み
+                    var header = new byte[18];
+                    br.Read(header, 0, 18);
+
+                    // 画像の大きさ取得
+                    byte width = header[12];
+                    byte height = header[14];
+
+                    // 格納されているカラーデータのサイズ
+                    int color_size = (width * height) * 4;
+
+                    // バイナリからカラーデータ読み込み
+                    byte[] pixel_data = new byte[color_size];
+                    br.Read(pixel_data, 0, color_size);
+
+                    // もう使わないので削除
+                    fs.Dispose();
+                    br.Dispose();
+
+                    // Bitmap 作成
+                    Bitmap bmp = new Bitmap(width, height);
+
+                    // ピクセル単位で読み込み
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            int by = y * width * 4;
+                            int bx = x * 4;
+
+                            int base_i = by + bx;
+
+                            Color color =
+                                Color.FromArgb(
+                                    pixel_data[base_i + 3],
+                                    pixel_data[base_i + 0],
+                                    pixel_data[base_i + 1],
+                                    pixel_data[base_i + 2]
+                                    );
+
+                            bmp.SetPixel(x, y, color);
+                        }
+                    }
+
+                    // プレビュー用データを設定
+                    lbl_info.Text = "" + bmp.Width + "x" + bmp.Height + " " + bmp.PixelFormat.ToString();
+                    pic_preview.Width = width;
+                    pic_preview.Height = height;
+                    pic_preview.Image = bmp;
+                }
+            }
+            catch (Exception e)
+            {
                 if (path == null) path = string.Empty;
-				System.IO.File.WriteAllText("error_image.txt", path +  "\n" + e.ToString());
-				pic_preview.Image = null;
-			}
-		}
+                System.IO.File.WriteAllText("error_image.txt", path + "\n" + e.ToString());
+                pic_preview.Image = null;
+            }
+        }
 
-		private void btn_load_Click(object sender, EventArgs e)
+        private void btn_load_Click(object sender, EventArgs e)
 		{
 			if (binding == null) return;
 
