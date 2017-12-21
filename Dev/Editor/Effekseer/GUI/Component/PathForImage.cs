@@ -156,8 +156,16 @@ namespace Effekseer.GUI.Component
                     int width = header[12] + header[13] * 256;
                     int height = header[14] + header[15] * 256;
 
+                    int format = header[16];
+                    int color_step = 4;
+
+                    if (format == 24)
+                    {
+                        color_step = 3;
+                    }
+
                     // 格納されているカラーデータのサイズ
-                    int color_size = (width * height) * 4;
+                    int color_size = (width * height) * color_step;
 
                     // バイナリからカラーデータ読み込み
                     byte[] pixel_data = new byte[color_size];
@@ -170,30 +178,36 @@ namespace Effekseer.GUI.Component
                     // Bitmap 作成
                     Bitmap bmp = new Bitmap(width, height);
 
-                    // ピクセル単位で読み込み
-                    for (int y = 0; y < height; y++)
-                    {
-                        for (int x = 0; x < width; x++)
-                        {
-                            int by = y * width * 4;
-                            int bx = x * 4;
+                    int y_step = 1;
+                    int x_step = 1;
 
-                            int base_i = by + bx;
+                    if (height > 128) y_step = height / 128;
+                    if (width > 128) x_step = width / 128;
+
+                    // ピクセル単位で読み込み
+                    for (int y = 0; y < height; y += y_step)
+                    {
+                        for (int x = 0; x < width; x += x_step)
+                        {
+                            int by = y * width;
+                            int bx = x;
+
+                            int base_i = (by + bx) * color_step;
 
                             Color color =
                                 Color.FromArgb(
-                                    pixel_data[base_i + 3],
+                                    (color_step == 4) ? pixel_data[base_i + 3] : 255,
                                     pixel_data[base_i + 2],
                                     pixel_data[base_i + 1],
                                     pixel_data[base_i + 0]
                                     );
 
-                            bmp.SetPixel(x, (height - 1) - y, color);
+                            bmp.SetPixel(x / x_step, ((height - 1) - y) / y_step, color);
                         }
                     }
 
                     // プレビュー用データを設定
-                    lbl_info.Text = "" + bmp.Width + "x" + bmp.Height + " " + bmp.PixelFormat.ToString();
+                    lbl_info.Text = "" + bmp.Width + "x" + bmp.Height + " " + ((format == 32) ? "Format32bpp" : "Format24bpp");
                     pic_preview.Width = width;
                     pic_preview.Height = height;
                     pic_preview.Image = bmp;

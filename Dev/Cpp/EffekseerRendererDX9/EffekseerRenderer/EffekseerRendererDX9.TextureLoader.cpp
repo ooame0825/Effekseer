@@ -188,9 +188,19 @@ Effekseer::TextureData* TextureLoader::Load(const EFK_CHAR* path, ::Effekseer::T
 
 				int width  = tga_header[12] + tga_header[13] * 256;
 				int height = tga_header[14] + tga_header[15] * 256;
-				int map_size = width * height * 4;
+
+				_D3DFORMAT format = _D3DFORMAT::D3DFMT_A8R8G8B8;
+				int color_step = 4;
+				int fmt_step = 4;
+
+				if (tga_header[16] == 24)
+				{
+					format = _D3DFORMAT::D3DFMT_X8R8G8B8;
+					color_step = 3;
+				}
 
 				// カラーマップ取得
+				int map_size = width * height * color_step;
 				uint8_t* color_map = new uint8_t[map_size];
 				fread(color_map, sizeof(char), map_size, fp);
 
@@ -203,7 +213,7 @@ Effekseer::TextureData* TextureLoader::Load(const EFK_CHAR* path, ::Effekseer::T
 					height,
 					1,
 					D3DUSAGE_AUTOGENMIPMAP,
-					D3DFMT_A8R8G8B8,
+					format,
 					D3DPOOL_DEFAULT,
 					&texture,
 					NULL
@@ -216,7 +226,7 @@ Effekseer::TextureData* TextureLoader::Load(const EFK_CHAR* path, ::Effekseer::T
 					height,
 					1,
 					0,
-					D3DFMT_A8R8G8B8,
+					format,
 					D3DPOOL_SYSTEMMEM,
 					&tempTexture,
 					NULL
@@ -231,13 +241,16 @@ Effekseer::TextureData* TextureLoader::Load(const EFK_CHAR* path, ::Effekseer::T
 					{
 						for (int w = 0; w < width; w++)
 						{
-							int lu_index = (h * width + w) * 4;
-							int ld_index = (((height - h) * width) + w) * 4;
+							// 左上から走査(Texture用)
+							int lu_index = (h * width + w) * fmt_step;
+							// 左下から走査(color_map用)
+							int ld_index = (((height - 1 - h) * width) + w) * color_step;
 
-							destBits[lu_index + 0] = color_map[ld_index + 0];
-							destBits[lu_index + 1] = color_map[ld_index + 1];
-							destBits[lu_index + 2] = color_map[ld_index + 2];
-							destBits[lu_index + 3] = color_map[ld_index + 3];
+							for (int c = 0; c < color_step; c++)
+							{
+								destBits[lu_index + c] = color_map[ld_index + c];
+							}
+
 						}
 					}
 
