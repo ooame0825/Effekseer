@@ -34,8 +34,8 @@ namespace Effekseer.Utl
 
             var buf = new byte[1024];
 
-            // png ヘッダー部分読み込み
-            if (br.Read(buf, 0, 18) != 18)
+            // ヘッダー部分読み込み
+            if (br.Read(buf, 0, 30) != 30)
             {
                 fs.Dispose();
                 br.Dispose();
@@ -52,25 +52,17 @@ namespace Effekseer.Utl
                 buf[6] == 0x1A &&
                 buf[7] == 0x0A)
             {
-                if (br.Read(buf, 0, 25) != 25)
-                {
-                    fs.Dispose();
-                    br.Dispose();
-                    return false;
-                }
-
-                var width = new byte[] { buf[11], buf[10], buf[9], buf[8] };
-                var height = new byte[] { buf[15], buf[14], buf[13], buf[12] };
-                Width = BitConverter.ToInt32(width, 0);
+                var width  = new byte[] { buf[19], buf[18], buf[17], buf[16] };
+                var height = new byte[] { buf[23], buf[22], buf[21], buf[20] };
+                Width  = BitConverter.ToInt32(width, 0);
                 Height = BitConverter.ToInt32(height, 0);
             }
             // tga か拡張子で判別
             else if (path.Contains(".tga") == true)
             {
-                var width = new byte[] { buf[12], buf[13], 0, 0 };
+                var width  = new byte[] { buf[12], buf[13], 0, 0 };
                 var height = new byte[] { buf[14], buf[15], 0, 0 };
-
-                Width = BitConverter.ToInt32(width, 0);
+                Width  = BitConverter.ToInt32(width, 0);
                 Height = BitConverter.ToInt32(height, 0);
             }
             else
