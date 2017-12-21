@@ -186,8 +186,8 @@ Effekseer::TextureData* TextureLoader::Load(const EFK_CHAR* path, ::Effekseer::T
 					tga_header[i] = fgetc(fp);
 				}
 
-				int width = tga_header[12];
-				int height = tga_header[14];
+				int width  = tga_header[12] + tga_header[13] * 256;
+				int height = tga_header[14] + tga_header[15] * 256;
 				int map_size = width * height * 4;
 
 				// カラーマップ取得
@@ -231,19 +231,21 @@ Effekseer::TextureData* TextureLoader::Load(const EFK_CHAR* path, ::Effekseer::T
 					{
 						for (int w = 0; w < width; w++)
 						{
-							memcpy(destBits, color_map, 4);
+							int lu_index = (h * width + w) * 4;
+							int ld_index = (((height - h) * width) + w) * 4;
 
-							destBits += 4;
-							color_map += 4;
+							destBits[lu_index + 0] = color_map[ld_index + 0];
+							destBits[lu_index + 1] = color_map[ld_index + 1];
+							destBits[lu_index + 2] = color_map[ld_index + 2];
+							destBits[lu_index + 3] = color_map[ld_index + 3];
 						}
 					}
 
 					tempTexture->UnlockRect(0);
 				}
 
-				// ポインタの位置を戻してから削除
-				color_map -= map_size;
-				delete color_map;
+				// カラーマップを削除
+				delete[] color_map;
 
 				hr = device->UpdateTexture(tempTexture, texture);
 				ES_SAFE_RELEASE(tempTexture);

@@ -153,8 +153,8 @@ namespace Effekseer.GUI.Component
                     br.Read(header, 0, 18);
 
                     // 画像の大きさ取得
-                    byte width = header[12];
-                    byte height = header[14];
+                    int width = header[12] + header[13] * 256;
+                    int height = header[14] + header[15] * 256;
 
                     // 格納されているカラーデータのサイズ
                     int color_size = (width * height) * 4;
@@ -183,12 +183,12 @@ namespace Effekseer.GUI.Component
                             Color color =
                                 Color.FromArgb(
                                     pixel_data[base_i + 3],
-                                    pixel_data[base_i + 0],
+                                    pixel_data[base_i + 2],
                                     pixel_data[base_i + 1],
-                                    pixel_data[base_i + 2]
+                                    pixel_data[base_i + 0]
                                     );
 
-                            bmp.SetPixel(x, y, color);
+                            bmp.SetPixel(x, (height - 1) - y, color);
                         }
                     }
 
