@@ -419,9 +419,9 @@ namespace Effekseer.GUI
 				Core.EffectBehavior.Rotation.Z / 180.0f * 3.141592f);
 
 			viewer.SetScale(
-				Core.EffectBehavior.Scale.X,
-				Core.EffectBehavior.Scale.Y,
-				Core.EffectBehavior.Scale.Z);
+				Core.EffectBehavior.Scale.X * 0.1f,
+				Core.EffectBehavior.Scale.Y * 0.1f,
+				Core.EffectBehavior.Scale.Z * 0.1f);
 
 			viewer.SetTargetLocation(
 				Core.EffectBehavior.TargetLocation.X,
