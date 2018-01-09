@@ -492,6 +492,24 @@ ViewerEffectBehavior::ViewerEffectBehavior()
 
 }
 
+struct HandleHolder
+{
+	::Effekseer::Handle		Handle = 0;
+	int32_t					Time = 0;
+
+	HandleHolder()
+		: Handle(0)
+		, Time(0)
+	{
+	}
+
+	HandleHolder(::Effekseer::Handle handle, int32_t time = 0)
+		: Handle(handle)
+		, Time(time)
+	{
+	}
+};
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
@@ -502,7 +520,7 @@ static ::EffekseerTool::Sound*			g_sound = NULL;
 static std::map<std::wstring, Effekseer::TextureData*> m_textures;
 static std::map<std::wstring,EffekseerRendererDX9::Model*> m_models;
 
-static std::vector<::Effekseer::Handle>	g_handles;
+static std::vector<HandleHolder>	g_handles;
 
 static ::Effekseer::Vector3D	g_focus_position;
 
@@ -627,134 +645,22 @@ void* Native::ModelLoader::Load( const EFK_CHAR* path )
 
 	if( m_models.count( key ) > 0 )
 	{
-		model = m_models[ key ];
+		return m_models[ key ];
 	}
 	else
 	{
+		auto loader = ::EffekseerRendererDX9::CreateModelLoader(m_renderer->GetDevice());
+		auto m = (EffekseerRendererDX9::Model*)loader->Load((const EFK_CHAR*) dst);
 
-		FILE* fp_model = _wfopen( (const wchar_t *)dst, L"rb" );
-
-		if( fp_model != NULL )
+		if (m != nullptr)
 		{
-			HRESULT hr;
-
-			fseek( fp_model, 0, SEEK_END );
-			size_t size_model = ftell( fp_model );
-			uint8_t* data_model = new uint8_t[size_model];
-			fseek( fp_model, 0, SEEK_SET );
-			fread( data_model, 1, size_model, fp_model );
-			fclose( fp_model );
-
-			model = new EffekseerRendererDX9::Model( data_model, size_model );
-
-			model->ModelCount = Effekseer::Min( Effekseer::Max( model->GetModelCount(), 1 ), 40);
-
-			model->VertexCount = model->GetVertexCount();
-
-			IDirect3DVertexBuffer9* vb = NULL;
-			hr = m_renderer->GetDevice()->CreateVertexBuffer(
-				sizeof(Effekseer::Model::VertexWithIndex) * model->VertexCount * model->ModelCount,
-				D3DUSAGE_WRITEONLY,
-				0,
-				D3DPOOL_MANAGED,
-				&vb,
-				NULL );
-
-			if( FAILED( hr ) )
-			{
-				/* DirectX9ExではD3DPOOL_MANAGED使用不可 */
-				hr = m_renderer->GetDevice()->CreateVertexBuffer(
-					sizeof(Effekseer::Model::VertexWithIndex) * model->VertexCount * model->ModelCount,
-					D3DUSAGE_WRITEONLY,
-					0,
-					D3DPOOL_DEFAULT,
-					&vb,
-					NULL );
-			}
-
-			if( vb != NULL )
-			{
-				uint8_t* resource = NULL;
-				vb->Lock( 0, 0, (void**)&resource, 0 );
-
-				for(int32_t m = 0; m < model->ModelCount; m++ )
-				{
-					for( int32_t i = 0; i < model->GetVertexCount(); i++ )
-					{
-						Effekseer::Model::VertexWithIndex v;
-						v.Position = model->GetVertexes()[i].Position;
-						v.Normal = model->GetVertexes()[i].Normal;
-						v.Binormal = model->GetVertexes()[i].Binormal;
-						v.Tangent = model->GetVertexes()[i].Tangent;
-						v.UV = model->GetVertexes()[i].UV;
-						v.VColor = model->GetVertexes()[i].VColor;
-						v.Index[0] = m;
-
-						std::swap(v.VColor.R, v.VColor.B);
-
-						memcpy( resource, &v, sizeof(Effekseer::Model::VertexWithIndex) );
-						resource += sizeof(Effekseer::Model::VertexWithIndex);
-					}
-				}
-
-				vb->Unlock();
-			}
-
-			model->VertexBuffer = vb;
-
-			model->FaceCount = model->GetFaceCount();
-			model->IndexCount = model->FaceCount * 3;
-			IDirect3DIndexBuffer9* ib = NULL;
-			hr = m_renderer->GetDevice()->CreateIndexBuffer( 
-				sizeof(Effekseer::Model::Face) * model->FaceCount * model->ModelCount,
-				D3DUSAGE_WRITEONLY, 
-				D3DFMT_INDEX32, 
-				D3DPOOL_MANAGED, 
-				&ib, 
-				NULL );
-
-			if( FAILED( hr ) )
-			{
-				hr = m_renderer->GetDevice()->CreateIndexBuffer( 
-					sizeof(Effekseer::Model::Face) * model->FaceCount * model->ModelCount,
-					D3DUSAGE_WRITEONLY, 
-					D3DFMT_INDEX32, 
-					D3DPOOL_DEFAULT, 
-					&ib, 
-					NULL );
-			}
-
-			if( ib != NULL )
-			{
-				uint8_t* resource = NULL;
-				ib->Lock( 0, 0, (void**)&resource, 0 );
-				for(int32_t m = 0; m < model->ModelCount; m++ )
-				{
-					for( int32_t i = 0; i < model->FaceCount; i++ )
-					{
-						Effekseer::Model::Face f;
-						f.Indexes[0] = model->GetFaces()[i].Indexes[0] + model->GetVertexCount() * m;
-						f.Indexes[1] = model->GetFaces()[i].Indexes[1] + model->GetVertexCount() * m;
-						f.Indexes[2] = model->GetFaces()[i].Indexes[2] + model->GetVertexCount() * m;
-
-						memcpy( resource, &f, sizeof(Effekseer::Model::Face) );
-						resource += sizeof(Effekseer::Model::Face);
-					}
-				}
-				
-				ib->Unlock();
-			}
-
-			model->IndexBuffer = ib;
-
-			delete [] data_model;
-
-			return model;
+			m_models[key] = m;
 		}
 
-	}
+		ES_SAFE_DELETE(loader);
 
-	return model;
+		return m;
+	}
 }
 
 //----------------------------------------------------------------------------------
@@ -941,7 +847,7 @@ bool Native::DestroyWindow()
 
 	for( size_t i = 0; i < g_handles.size(); i++ )
 	{
-		g_manager->StopEffect( g_handles[i] );
+		g_manager->StopEffect( g_handles[i].Handle );
 	}
 	g_handles.clear();
 	
@@ -1013,7 +919,22 @@ bool Native::PlayEffect()
 		posY += m_effectBehavior.PositionY;
 		posZ += m_effectBehavior.PositionZ;
 
-		g_handles.push_back( g_manager->Play( g_effect, x, y, z ) );
+		HandleHolder handleHolder(g_manager->Play(g_effect, x, y, z));
+		g_handles.push_back(handleHolder);
+
+		if (m_effectBehavior.AllColorR != 255 ||
+			m_effectBehavior.AllColorG != 255 ||
+			m_effectBehavior.AllColorB != 255 ||
+			m_effectBehavior.AllColorA != 255)
+		{
+			g_manager->SetAllColor(
+				handleHolder.Handle,
+				Effekseer::Color(
+				m_effectBehavior.AllColorR,
+				m_effectBehavior.AllColorG,
+				m_effectBehavior.AllColorB,
+				m_effectBehavior.AllColorA));
+		}
 	}
 	}
 	}
@@ -1042,7 +963,7 @@ bool Native::StopEffect()
 
 	for( size_t i = 0; i < g_handles.size(); i++ )
 	{
-		g_manager->StopEffect( g_handles[i] );
+		g_manager->StopEffect( g_handles[i].Handle );
 	}
 	g_handles.clear();
 
@@ -1070,7 +991,7 @@ bool Native::StepEffect( int frame )
 
 		for( size_t i = 0; i < g_handles.size(); i++ )
 		{
-			g_manager->SetShown( g_handles[i], false );
+			g_manager->SetShown( g_handles[i].Handle, false );
 		}
 
 		for( int i = 0; i < frame - 1; i++ )
@@ -1080,7 +1001,7 @@ bool Native::StepEffect( int frame )
 
 		for( size_t i = 0; i < g_handles.size(); i++ )
 		{
-			g_manager->SetShown( g_handles[i], true );
+			g_manager->SetShown( g_handles[i].Handle, true );
 		}
 
 		g_sound->SetMute(mute);
@@ -1094,6 +1015,11 @@ bool Native::StepEffect( int frame )
 //----------------------------------------------------------------------------------
 bool Native::StepEffect()
 {
+	if (m_effectBehavior.TimeSpan > 0 && m_time > 0 && m_time % m_effectBehavior.TimeSpan == 0)
+	{
+		PlayEffect();
+	}
+
 	if( m_time % m_step == 0 )
 	{
 		m_rootLocation.X += m_effectBehavior.PositionVelocityX;
@@ -1138,9 +1064,10 @@ bool Native::StepEffect()
 			Effekseer::Matrix43::Multiple( mat, mat, matRot );
 			Effekseer::Matrix43::Multiple( mat, mat, matTra );
 
-			g_manager->SetMatrix( g_handles[index], mat );
+			g_manager->SetMatrix( g_handles[index].Handle, mat );
 
-			g_manager->SetTargetLocation( g_handles[index], 
+			g_manager->SetTargetLocation(
+				g_handles[index].Handle, 
 				m_effectBehavior.TargetPositionX,
 				m_effectBehavior.TargetPositionY,
 				m_effectBehavior.TargetPositionZ );
@@ -1150,15 +1077,22 @@ bool Native::StepEffect()
 		}
 		}
 
-		if( m_time >= m_effectBehavior.RemovedTime )
+		
+		for( size_t i = 0; i < g_handles.size(); i++ )
 		{
-			for( size_t i = 0; i < g_handles.size(); i++ )
+			if (g_handles[i].Time >= m_effectBehavior.RemovedTime)
 			{
-				g_manager->StopRoot( g_handles[i] );
+				g_manager->StopRoot(g_handles[i].Handle);
 			}
 		}
+		
 
 		g_manager->Update( (float)m_step );
+
+		for (size_t i = 0; i < g_handles.size(); i++)
+		{
+			g_handles[i].Time++;
+		}
 	}
 
 	m_time++;

@@ -1009,6 +1009,17 @@ void ManagerImplemented::SetScale( Handle handle, float x, float y, float z )
 	}
 }
 
+void ManagerImplemented::SetAllColor(Handle handle, Color color)
+{
+	if (m_DrawSets.count(handle) > 0)
+	{
+		auto& drawSet = m_DrawSets[handle];
+
+		drawSet.GlobalPointer->IsGlobalColorSet = true;
+		drawSet.GlobalPointer->GlobalColor = color;
+	}
+}
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
@@ -1123,6 +1134,14 @@ void ManagerImplemented::SetPausedToAllEffects(bool paused)
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
+float ManagerImplemented::GetSpeed(Handle handle) const
+{
+	auto it = m_DrawSets.find(handle);
+	if (it == m_DrawSets.end()) return 0.0f;
+	return it->second.Speed;
+}
+
+
 void ManagerImplemented::SetSpeed( Handle handle, float speed )
 {
 	if( m_DrawSets.count( handle ) > 0 )

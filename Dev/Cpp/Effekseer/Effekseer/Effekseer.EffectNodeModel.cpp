@@ -144,6 +144,7 @@ void EffectNodeModel::Rendering(const Instance& instance, Manager* manager)
 
 		ModelRenderer::InstanceParameter instanceParameter;
 		instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
+		instanceParameter.Time = instance.m_LivingTime;
 
 		instanceParameter.UV = instance.GetUV();
 		
@@ -158,6 +159,12 @@ void EffectNodeModel::Rendering(const Instance& instance, Manager* manager)
 		}
 
 		_color.setValueToArg( instanceParameter.AllColor );
+
+		// Apply global color
+		if (instance.m_pContainer->GetRootInstance()->IsGlobalColorSet)
+		{
+			Color::Mul(instanceParameter.AllColor, instanceParameter.AllColor, instance.m_pContainer->GetRootInstance()->GlobalColor);
+		}
 
 		renderer->Rendering( nodeParameter, instanceParameter, m_userData );
 	}

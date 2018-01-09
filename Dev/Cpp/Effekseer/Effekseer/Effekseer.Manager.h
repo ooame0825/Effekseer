@@ -313,6 +313,13 @@ public:
 	virtual void SetScale( Handle handle, float x, float y, float z ) = 0;
 
 	/**
+	@brief
+		\~English	Specify the color of overall effect.
+		\~Japanese	エフェクト全体の色を指定する。
+	*/
+	virtual void SetAllColor(Handle handle, Color color) = 0;
+
+	/**
 		@brief	エフェクトのインスタンスのターゲット位置を指定する。
 		@param	x	[in]	X座標
 		@param	y	[in]	Y座標
@@ -390,6 +397,19 @@ public:
 			\~Japanese	一時停止、もしくは再開
 	*/
 	virtual void SetPausedToAllEffects(bool paused) = 0;
+
+	/**
+	@brief
+	\~English	Get a playing speed of particle of effect.
+	\~Japanese	エフェクトのパーティクルの再生スピードを取得する。
+	@param	handle
+	\~English	Particle's handle
+	\~Japanese	パーティクルのハンドル
+	@return
+	\~English	Speed
+	\~Japanese	スピード
+	*/
+	virtual float GetSpeed(Handle handle) const = 0;
 
 	/**
 		@brief	エフェクトのインスタンスを再生スピードを設定する。

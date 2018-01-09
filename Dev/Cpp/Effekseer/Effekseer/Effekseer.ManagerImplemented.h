@@ -471,6 +471,8 @@ public:
 	*/
 	void SetScale( Handle handle, float x, float y, float z );
 
+	void SetAllColor(Handle handle, Color color) override;
+
 	// エフェクトのターゲット位置を指定する。
 	void SetTargetLocation( Handle handle, float x, float y, float z );
 	void SetTargetLocation( Handle handle, const Vector3D& location );
@@ -496,8 +498,12 @@ public:
 
 	void SetPausedToAllEffects(bool paused);
 
+	float GetSpeed(Handle handle) const override;
+
 	void SetSpeed( Handle handle, float speed );
+	
 	void SetAutoDrawing( Handle handle, bool autoDraw );
+	
 	void Flip();
 
 	/**
