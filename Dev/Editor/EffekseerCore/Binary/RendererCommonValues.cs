@@ -31,8 +31,66 @@ namespace Effekseer.Binary
 					data.Add((-1).GetBytes());
 					hasTexture = false;
 				}
-			}
-			else
+
+
+                // texture 1
+                if (value.ColorTexture1.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture1.RelativePath) &&
+                    texInfo.Load(value.ColorTexture1.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture1.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    //hasTexture = false;
+                }
+
+                // texture 2
+                if (value.ColorTexture2.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture2.RelativePath) &&
+                    texInfo.Load(value.ColorTexture2.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture2.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    //hasTexture = false;
+                }
+
+                // texture 3
+                if (value.ColorTexture3.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture3.RelativePath) &&
+                    texInfo.Load(value.ColorTexture3.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture3.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    //hasTexture = false;
+                }
+
+                // texture 4
+                if (value.ColorTexture4.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture4.RelativePath) &&
+                    texInfo.Load(value.ColorTexture4.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture4.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    //hasTexture = false;
+                }
+
+            }
+            else
 			{
 				if (value.ColorTexture.RelativePath != string.Empty &&
 					texture_and_index.ContainsKey(value.ColorTexture.RelativePath) &&
@@ -47,6 +105,21 @@ namespace Effekseer.Binary
 					hasTexture = false;
 				}
 
+                // texture 1
+                if (value.ColorTexture1.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture1.RelativePath) &&
+                    texInfo.Load(value.ColorTexture1.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture1.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                   //hasTexture = false;
+                }
+
+                // texture 2
                 if (value.ColorTexture2.RelativePath != string.Empty &&
                     texture_and_index.ContainsKey(value.ColorTexture2.RelativePath) &&
                     texInfo.Load(value.ColorTexture2.AbsolutePath))
@@ -57,7 +130,35 @@ namespace Effekseer.Binary
                 else
                 {
                     data.Add((-1).GetBytes());
-                    hasTexture = false;
+                    //hasTexture = false;
+                }
+
+                // texture 3
+                if (value.ColorTexture3.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture3.RelativePath) &&
+                    texInfo.Load(value.ColorTexture3.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture3.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    //hasTexture = false;
+                }
+
+                // texture 4
+                if (value.ColorTexture4.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture4.RelativePath) &&
+                    texInfo.Load(value.ColorTexture4.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture4.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    //hasTexture = false;
                 }
             }
 			

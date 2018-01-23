@@ -73,7 +73,7 @@ namespace Effekseer.Binary
 								}
 
                                 // ColorTexture1
-                                relative_path = _node.RendererCommonValues.ColorTexture2.RelativePath;
+                                relative_path = _node.RendererCommonValues.ColorTexture1.RelativePath;
                                 if (relative_path != string.Empty)
                                 {
                                     if (_node.RendererCommonValues.Distortion.Value)
@@ -93,7 +93,47 @@ namespace Effekseer.Binary
                                 }
 
                                 // ColorTexture2
+                                relative_path = _node.RendererCommonValues.ColorTexture2.RelativePath;
+                                if (relative_path != string.Empty)
+                                {
+                                    if (_node.RendererCommonValues.Distortion.Value)
+                                    {
+                                        if (!distortionTextures.Contains(relative_path))
+                                        {
+                                            distortionTextures.Add(relative_path);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!textures.Contains(relative_path))
+                                        {
+                                            textures.Add(relative_path);
+                                        }
+                                    }
+                                }
+
+                                // ColorTexture3
                                 relative_path = _node.RendererCommonValues.ColorTexture3.RelativePath;
+                                if (relative_path != string.Empty)
+                                {
+                                    if (_node.RendererCommonValues.Distortion.Value)
+                                    {
+                                        if (!distortionTextures.Contains(relative_path))
+                                        {
+                                            distortionTextures.Add(relative_path);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!textures.Contains(relative_path))
+                                        {
+                                            textures.Add(relative_path);
+                                        }
+                                    }
+                                }
+
+                                // ColorTexture4
+                                relative_path = _node.RendererCommonValues.ColorTexture4.RelativePath;
                                 if (relative_path != string.Empty)
                                 {
                                     if (_node.RendererCommonValues.Distortion.Value)

@@ -463,6 +463,9 @@ struct ParameterRendererCommon
 {
 	int32_t				ColorTextureIndex;
 	int32_t				ColorTextureIndex1;
+	int32_t				ColorTextureIndex2;
+	int32_t				ColorTextureIndex3;
+	int32_t				ColorTextureIndex4;
 
 	AlphaBlendType		AlphaBlend;
 
@@ -590,6 +593,15 @@ struct ParameterRendererCommon
 		pos += sizeof(int);
 
 		memcpy(&ColorTextureIndex1, pos, sizeof(int));
+		pos += sizeof(int);
+
+		memcpy(&ColorTextureIndex2, pos, sizeof(int));
+		pos += sizeof(int);
+
+		memcpy(&ColorTextureIndex3, pos, sizeof(int));
+		pos += sizeof(int);
+
+		memcpy(&ColorTextureIndex4, pos, sizeof(int));
 		pos += sizeof(int);
 
 		memcpy( &AlphaBlend, pos, sizeof(int) );
