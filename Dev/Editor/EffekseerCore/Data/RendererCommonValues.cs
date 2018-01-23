@@ -17,7 +17,27 @@ namespace Effekseer.Data
 			private set;
 		}
 
-		[Name(language = Language.Japanese, value = "ブレンド")]
+        [Name(language = Language.Japanese, value = "色/歪み画像2")]
+        [Description(language = Language.Japanese, value = "色/歪みを表す画像2")]
+        [Name(language = Language.English, value = "Texture2")]
+        [Description(language = Language.English, value = "Image that represents color/distortion2")]
+        public Value.PathForImage ColorTexture2
+        {
+            get;
+            private set;
+        }
+
+        [Name(language = Language.Japanese, value = "色/歪み画像3")]
+        [Description(language = Language.Japanese, value = "色/歪みを表す画像3")]
+        [Name(language = Language.English, value = "Texture3")]
+        [Description(language = Language.English, value = "Image that represents color/distortion3")]
+        public Value.PathForImage ColorTexture3
+        {
+            get;
+            private set;
+        }
+
+        [Name(language = Language.Japanese, value = "ブレンド")]
 		[Name(language = Language.English, value = "Blend")]
 		public Value.Enum<AlphaBlendType> AlphaBlend { get; private set; }
 
@@ -137,8 +157,10 @@ namespace Effekseer.Data
 		internal RendererCommonValues()
 		{
             ColorTexture = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
-			
-			AlphaBlend = new Value.Enum<AlphaBlendType>(AlphaBlendType.Blend);
+            ColorTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
+            ColorTexture3 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
+
+            AlphaBlend = new Value.Enum<AlphaBlendType>(AlphaBlendType.Blend);
 			Filter = new Value.Enum<FilterType>(FilterType.Linear);
 			Wrap = new Value.Enum<WrapType>(WrapType.Repeat);
 
