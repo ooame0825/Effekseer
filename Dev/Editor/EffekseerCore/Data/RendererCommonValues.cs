@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection.Emit;
 
 namespace Effekseer.Data
 {
@@ -32,6 +33,26 @@ namespace Effekseer.Data
         [Name(language = Language.English, value = "Texture3")]
         [Description(language = Language.English, value = "Image that represents color/distortion3")]
         public Value.PathForImage ColorTexture3
+        {
+            get;
+            private set;
+        }
+
+        [Name(language = Language.Japanese, value = "色/歪み画像3")]
+        [Description(language = Language.Japanese, value = "色/歪みを表す画像3")]
+        [Name(language = Language.English, value = "Texture3")]
+        [Description(language = Language.English, value = "Image that represents color/distortion3")]
+        public Value.PathForImage ColorTexture4
+        {
+            get;
+            private set;
+        }
+
+        [Name(language = Language.Japanese, value = "色/歪み画像3")]
+        [Description(language = Language.Japanese, value = "色/歪みを表す画像3")]
+        [Name(language = Language.English, value = "Texture3")]
+        [Description(language = Language.English, value = "Image that represents color/distortion3")]
+        public Value.PathForImage ColorTexture5
         {
             get;
             private set;
@@ -154,11 +175,13 @@ namespace Effekseer.Data
 		[Name(language = Language.English, value = "Distortion\nIntensity")]
 		public Value.Float DistortionIntensity { get; private set; }
 
-		internal RendererCommonValues()
+        internal RendererCommonValues()
 		{
             ColorTexture = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
             ColorTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
             ColorTexture3 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
+            ColorTexture4 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
+            ColorTexture5 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
 
             AlphaBlend = new Value.Enum<AlphaBlendType>(AlphaBlendType.Blend);
 			Filter = new Value.Enum<FilterType>(FilterType.Linear);

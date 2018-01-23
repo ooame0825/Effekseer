@@ -46,7 +46,20 @@ namespace Effekseer.Binary
 					data.Add((-1).GetBytes());
 					hasTexture = false;
 				}
-			}
+
+                if (value.ColorTexture2.RelativePath != string.Empty &&
+                    texture_and_index.ContainsKey(value.ColorTexture2.RelativePath) &&
+                    texInfo.Load(value.ColorTexture2.AbsolutePath))
+                {
+                    data.Add(texture_and_index[value.ColorTexture2.RelativePath].GetBytes());
+                    hasTexture = true;
+                }
+                else
+                {
+                    data.Add((-1).GetBytes());
+                    hasTexture = false;
+                }
+            }
 			
 
 			data.Add(value.AlphaBlend);

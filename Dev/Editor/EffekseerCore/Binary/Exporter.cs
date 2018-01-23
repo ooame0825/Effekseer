@@ -9,7 +9,7 @@ namespace Effekseer.Binary
 {
 	public class Exporter
 	{
-		const int Version = 12;
+		const int Version = 13;
 
 		/// <summary>
 		/// エフェクトデータの出力
@@ -51,6 +51,8 @@ namespace Effekseer.Binary
 						else
 						{
 							{
+                                // add ColorTexture path
+                                // ColorTexture0
 								var relative_path = _node.RendererCommonValues.ColorTexture.RelativePath;
 								if (relative_path != string.Empty)
 								{
@@ -69,7 +71,47 @@ namespace Effekseer.Binary
 										}
 									}
 								}
-							}
+
+                                // ColorTexture1
+                                relative_path = _node.RendererCommonValues.ColorTexture2.RelativePath;
+                                if (relative_path != string.Empty)
+                                {
+                                    if (_node.RendererCommonValues.Distortion.Value)
+                                    {
+                                        if (!distortionTextures.Contains(relative_path))
+                                        {
+                                            distortionTextures.Add(relative_path);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!textures.Contains(relative_path))
+                                        {
+                                            textures.Add(relative_path);
+                                        }
+                                    }
+                                }
+
+                                // ColorTexture2
+                                relative_path = _node.RendererCommonValues.ColorTexture3.RelativePath;
+                                if (relative_path != string.Empty)
+                                {
+                                    if (_node.RendererCommonValues.Distortion.Value)
+                                    {
+                                        if (!distortionTextures.Contains(relative_path))
+                                        {
+                                            distortionTextures.Add(relative_path);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!textures.Contains(relative_path))
+                                        {
+                                            textures.Add(relative_path);
+                                        }
+                                    }
+                                }
+                            }
 
 							{
 								var relative_path = _node.DrawingValues.Model.NormalTexture.RelativePath;

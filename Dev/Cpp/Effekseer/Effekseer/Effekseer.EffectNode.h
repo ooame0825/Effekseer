@@ -462,6 +462,8 @@ struct ParameterGenerationLocation
 struct ParameterRendererCommon
 {
 	int32_t				ColorTextureIndex;
+	int32_t				ColorTextureIndex1;
+
 	AlphaBlendType		AlphaBlend;
 
 	TextureFilterType	FilterType;
@@ -585,6 +587,9 @@ struct ParameterRendererCommon
 		memset( this, 0, sizeof(ParameterRendererCommon) );
 
 		memcpy( &ColorTextureIndex, pos, sizeof(int) );
+		pos += sizeof(int);
+
+		memcpy(&ColorTextureIndex1, pos, sizeof(int));
 		pos += sizeof(int);
 
 		memcpy( &AlphaBlend, pos, sizeof(int) );
