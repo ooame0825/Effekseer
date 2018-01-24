@@ -115,6 +115,22 @@ namespace Effekseer
 		RendererCommon.ColorTextureIndex = SpriteTexture;
 	}
 
+	// オリジナルバージョンによる追加機能 : マルチテクスチャの取得
+	if (m_effect->GetOriginalVersion() >= 1)
+	{
+		SpriteTexture1 = RendererCommon.ColorTextureIndex1;
+		SpriteTexture2 = RendererCommon.ColorTextureIndex2;
+		SpriteTexture3 = RendererCommon.ColorTextureIndex3;
+		SpriteTexture4 = RendererCommon.ColorTextureIndex4;
+	}
+	else
+	{
+		SpriteTexture1 = 0;
+		SpriteTexture2 = 0;
+		SpriteTexture3 = 0;
+		SpriteTexture4 = 0;
+	}
+
 	// 右手系左手系変換
 	if (setting->GetCoordinateSystem() == CoordinateSystem::LH)
 	{
@@ -152,6 +168,10 @@ void EffectNodeSprite::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.ColorTextureIndex = SpriteTexture;
+		nodeParameter.ColorTextureIndex1 = SpriteTexture1;
+		nodeParameter.ColorTextureIndex2 = SpriteTexture2;
+		nodeParameter.ColorTextureIndex3 = SpriteTexture3;
+		nodeParameter.ColorTextureIndex4 = SpriteTexture4;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
@@ -184,7 +204,10 @@ void EffectNodeSprite::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.ColorTextureIndex = SpriteTexture;
-		nodeParameter.EffectPointer = GetEffect();
+		nodeParameter.ColorTextureIndex1 = SpriteTexture1;
+		nodeParameter.ColorTextureIndex2 = SpriteTexture2;
+		nodeParameter.ColorTextureIndex3 = SpriteTexture3;
+		nodeParameter.ColorTextureIndex4 = SpriteTexture4;		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
 
@@ -281,7 +304,10 @@ void EffectNodeSprite::EndRendering(Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.ColorTextureIndex = SpriteTexture;
-		nodeParameter.EffectPointer = GetEffect();
+		nodeParameter.ColorTextureIndex1 = SpriteTexture1;
+		nodeParameter.ColorTextureIndex2 = SpriteTexture2;
+		nodeParameter.ColorTextureIndex3 = SpriteTexture3;
+		nodeParameter.ColorTextureIndex4 = SpriteTexture4;		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
 

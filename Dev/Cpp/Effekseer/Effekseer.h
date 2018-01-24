@@ -2066,6 +2066,10 @@ public:
 	{
 		Effect*				EffectPointer;
 		int32_t				ColorTextureIndex;
+		int32_t				ColorTextureIndex1;
+		int32_t				ColorTextureIndex2;
+		int32_t				ColorTextureIndex3;
+		int32_t				ColorTextureIndex4;
 		AlphaBlendType			AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType	TextureWrap;

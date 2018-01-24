@@ -133,6 +133,10 @@ public:
 	SpritePositionParameter SpritePosition;
 
 	int SpriteTexture;
+	int SpriteTexture1;
+	int SpriteTexture2;
+	int SpriteTexture3;
+	int SpriteTexture4;
 
 	EffectNodeSprite( Effect* effect, unsigned char*& pos )
 		: EffectNodeImplemented(effect, pos)

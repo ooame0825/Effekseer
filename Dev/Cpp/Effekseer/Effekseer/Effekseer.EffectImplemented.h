@@ -37,6 +37,7 @@ private:
 	mutable std::atomic<int32_t> m_reference;
 
 	int	m_version;
+	int m_original_version;
 
 	int	m_ImageCount;
 	EFK_CHAR**		m_ImagePaths;
@@ -147,7 +148,13 @@ public:
 	/**
 		@brief	エフェクトデータのバージョン取得
 	*/
-	int GetVersion() const;
+	int GetVersion() const override;
+
+	/**
+		@brief	エフェクトデータのオリジナルバージョン取得
+	*/
+	int GetOriginalVersion() const override;
+
 
 	/**
 		@brief	格納されている画像のポインタを取得する。

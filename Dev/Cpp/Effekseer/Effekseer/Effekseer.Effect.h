@@ -199,6 +199,11 @@ public:
 	@brief	Rootを取得する。
 	*/
 	virtual EffectNode* GetRoot() const = 0;
+
+	/**
+	@brief	エフェクトデータのオリジナルバージョン取得
+	*/
+	virtual int GetOriginalVersion() const = 0;
 };
 
 /**

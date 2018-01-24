@@ -184,6 +184,7 @@ EffectImplemented::EffectImplemented( Manager* pManager, void* pData, int size )
 	, m_setting			(NULL)
 	, m_reference		( 1 )
 	, m_version			( 0 )
+	, m_original_version( 0 ) 
 	, m_ImageCount		( 0 )
 	, m_ImagePaths		( NULL )
 	, m_pImages			( NULL )
@@ -220,6 +221,7 @@ EffectImplemented::EffectImplemented( Setting* setting, void* pData, int size )
 	, m_setting			(setting)
 	, m_reference		( 1 )
 	, m_version			( 0 )
+	, m_original_version(0)
 	, m_ImageCount		( 0 )
 	, m_ImagePaths		( NULL )
 	, m_pImages			( NULL )
@@ -288,7 +290,22 @@ bool EffectImplemented::Load( void* pData, int size, float mag, const EFK_CHAR* 
 	if( memcmp( &head, "SKFE", 4 ) != 0 ) return false;
 	pos += sizeof( int );
 
-	memcpy( &m_version, pos, sizeof(int) );
+	// Version
+	int version = 0;
+	memcpy( &version, pos, sizeof(int) );
+
+	int len = std::to_string(version).length();
+
+	if (len == 2)
+	{
+		m_version = version;
+	}
+	else if (len == 4)
+	{
+		m_version = version / 100;
+		m_original_version = version % 100;
+	}
+
 	pos += sizeof(int);
 
 	// 画像
@@ -558,6 +575,11 @@ Setting* EffectImplemented::GetSetting() const
 int EffectImplemented::GetVersion() const
 {
 	return m_version;
+}
+
+int EffectImplemented::GetOriginalVersion() const
+{
+	return m_original_version;
 }
 
 //----------------------------------------------------------------------------------
@@ -848,7 +870,6 @@ void EffectImplemented::UnloadResources()
 		}
 	}
 }
-
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

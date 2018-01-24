@@ -31,7 +31,7 @@ struct StandardRendererState
 	::Effekseer::CullingType			CullingType;
 	::Effekseer::TextureFilterType		TextureFilterType;
 	::Effekseer::TextureWrapType		TextureWrapType;
-	::Effekseer::TextureData*			TexturePtr;
+	::Effekseer::TextureData*			TexturePtr[5];
 
 	StandardRendererState()
 	{
@@ -44,7 +44,10 @@ struct StandardRendererState
 		CullingType = ::Effekseer::CullingType::Front;
 		TextureFilterType = ::Effekseer::TextureFilterType::Nearest;
 		TextureWrapType = ::Effekseer::TextureWrapType::Repeat;
-		TexturePtr = nullptr;
+		for (auto it : TexturePtr)
+		{
+			it = nullptr;
+		}
 	}
 
 	bool operator != (const StandardRendererState state)
@@ -57,7 +60,10 @@ struct StandardRendererState
 		if (CullingType != state.CullingType) return true;
 		if (TextureFilterType != state.TextureFilterType) return true;
 		if (TextureWrapType != state.TextureWrapType) return true;
-		if (TexturePtr != state.TexturePtr) return true;
+		for (int i = 0; i < 5; i++) 
+		{
+			if (TexturePtr[i] != state.TexturePtr[i]) return true;
+		}
 		return false;
 	}
 };
@@ -143,7 +149,10 @@ public:
 		Rendering();
 
 		// It is always initialized with the next drawing.
-		m_state.TexturePtr = (Effekseer::TextureData*)0x1;
+		for (auto it : m_state.TexturePtr)
+		{
+			it = (Effekseer::TextureData*)0x1;
+		}
 	}
 
 	void Rendering(const Effekseer::Matrix44& mCamera, const Effekseer::Matrix44& mProj)
@@ -218,7 +227,7 @@ public:
 
 		if (distortion)
 		{
-			if (m_state.TexturePtr != nullptr)
+			if (m_state.TexturePtr[0] != nullptr)
 			{
 				shader_ = m_shader_distortion;
 			}
@@ -229,7 +238,7 @@ public:
 		}
 		else
 		{
-			if (m_state.TexturePtr != nullptr)
+			if (m_state.TexturePtr[0] != nullptr)
 			{
 				shader_ = m_shader;
 			}
@@ -241,16 +250,28 @@ public:
 
 		m_renderer->BeginShader(shader_);
 
-		Effekseer::TextureData* textures[2];
+		Effekseer::TextureData* textures[5];
 
-		if (m_state.TexturePtr != nullptr)
+		for (int i = 0; i < 5; i++)
 		{
-			textures[0] = m_state.TexturePtr;
+			if (m_state.TexturePtr[i] != nullptr)
+			{
+				textures[i] = m_state.TexturePtr[i];
+			}
+			else
+			{
+				textures[i] = 0;
+			}
 		}
-		else
-		{
-			textures[0] = 0;
-		}
+
+		//if (m_state.TexturePtr != nullptr)
+		//{
+		//	textures[0] = m_state.TexturePtr;
+		//}
+		//else
+		//{
+		//	textures[0] = 0;
+		//}
 
 		if (distortion)
 		{
@@ -259,7 +280,7 @@ public:
 		}
 		else
 		{
-			m_renderer->SetTextures(shader_, textures, 1);
+			m_renderer->SetTextures(shader_, textures, 5);
 		}
 
 		((Effekseer::Matrix44*)(shader_->GetVertexConstantBuffer()))[0] = mCamera;

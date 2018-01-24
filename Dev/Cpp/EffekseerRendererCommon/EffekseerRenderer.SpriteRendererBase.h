@@ -71,16 +71,84 @@ protected:
 		{
 			if (state.Distortion)
 			{
-				state.TexturePtr = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
+				state.TexturePtr[0] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
 			}
 			else
 			{
-				state.TexturePtr = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
+				state.TexturePtr[0] = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
 			}
 		}
 		else
 		{
-			state.TexturePtr = nullptr;
+			state.TexturePtr[0] = nullptr;
+		}
+
+		// Texture 1
+		if (param.ColorTextureIndex1 >= 0)
+		{
+			if (state.Distortion)
+			{
+				state.TexturePtr[1] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex1);
+			}
+			else
+			{
+				state.TexturePtr[1] = param.EffectPointer->GetColorImage(param.ColorTextureIndex1);
+			}
+		}
+		else
+		{
+			state.TexturePtr[1] = nullptr;
+		}
+
+		// Texture 2
+		if (param.ColorTextureIndex2 >= 0)
+		{
+			if (state.Distortion)
+			{
+				state.TexturePtr[2] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex2);
+			}
+			else
+			{
+				state.TexturePtr[2] = param.EffectPointer->GetColorImage(param.ColorTextureIndex2);
+			}
+		}
+		else
+		{
+			state.TexturePtr[2] = nullptr;
+		}
+
+		// Texture 3
+		if (param.ColorTextureIndex3 >= 0)
+		{
+			if (state.Distortion)
+			{
+				state.TexturePtr[3] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex3);
+			}
+			else
+			{
+				state.TexturePtr[3] = param.EffectPointer->GetColorImage(param.ColorTextureIndex3);
+			}
+		}
+		else
+		{
+			state.TexturePtr[3] = nullptr;
+		}
+
+		// Texture 4
+		if (param.ColorTextureIndex4 >= 0)
+		{
+			if (state.Distortion)
+			{
+				state.TexturePtr[4] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex4);
+			}
+			else
+			{
+				state.TexturePtr[4] = param.EffectPointer->GetColorImage(param.ColorTextureIndex4);
+			}
+		}
+		else
+		{
+			state.TexturePtr[4] = nullptr;
 		}
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);

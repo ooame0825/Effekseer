@@ -9,7 +9,8 @@ namespace Effekseer.Binary
 {
 	public class Exporter
 	{
-		const int Version = 13;
+		const int Version = 12;
+        const int OriginalVersion = 1;
 
 		/// <summary>
 		/// エフェクトデータの出力
@@ -23,7 +24,7 @@ namespace Effekseer.Binary
 			data.Add(Encoding.UTF8.GetBytes("SKFE"));
 
 			// バージョン
-			data.Add(BitConverter.GetBytes(Version));
+			data.Add(BitConverter.GetBytes(Version * 100 + OriginalVersion));
 
 			// テクスチャ名称一覧取得
             SortedSet<string> textures = new SortedSet<string>();

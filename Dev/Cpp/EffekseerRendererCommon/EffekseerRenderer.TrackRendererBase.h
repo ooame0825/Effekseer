@@ -88,16 +88,19 @@ protected:
 		{
 			if (state.Distortion)
 			{
-				state.TexturePtr = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
+				state.TexturePtr[0] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
 			}
 			else
 			{
-				state.TexturePtr = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
+				state.TexturePtr[0] = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
 			}
 		}
 		else
 		{
-			state.TexturePtr = nullptr;
+			for (auto it : state.TexturePtr)
+			{
+				it = nullptr;
+			}
 		}
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);

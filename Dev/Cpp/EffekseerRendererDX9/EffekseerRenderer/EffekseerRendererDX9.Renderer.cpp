@@ -864,6 +864,17 @@ void RendererImplemented::SetTextures(Shader* shader, Effekseer::TextureData** t
 			GetDevice()->SetTexture(i, (IDirect3DTexture9*)textures[i]->UserPtr);
 		}
 	}
+
+	//GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	//GetDevice()->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+	//GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	//GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+
+	//GetDevice()->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	//GetDevice()->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+	//GetDevice()->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_CURRENT);
+	//GetDevice()->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
+	//GetDevice()->SetTextureStageState(1, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 }
 
 //----------------------------------------------------------------------------------
