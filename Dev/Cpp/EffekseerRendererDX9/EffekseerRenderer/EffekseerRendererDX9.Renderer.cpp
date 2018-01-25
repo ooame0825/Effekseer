@@ -306,8 +306,8 @@ bool RendererImplemented::Initialize( LPDIRECT3DDEVICE9 device )
 		this,
 		Standard_VS::g_vs20_VS,
 		sizeof(Standard_VS::g_vs20_VS),
-		Standard_PS::g_ps20_PS,
-		sizeof(Standard_PS::g_ps20_PS),
+		Standard_PS::g_ps30_PS,
+		sizeof(Standard_PS::g_ps30_PS),
 		"StandardRenderer", decl);
 	if (m_shader == NULL) return false;
 
@@ -363,6 +363,10 @@ bool RendererImplemented::Initialize( LPDIRECT3DDEVICE9 device )
 
 	m_shader->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2);
 	m_shader->SetVertexRegisterCount(8);
+
+	m_shader->SetPixelConstantBufferSize(sizeof(float) * 4 * 4);
+	m_shader->SetPixelRegisterCount(4);
+
 	m_shader_no_texture->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2);
 	m_shader_no_texture->SetVertexRegisterCount(8);
 
@@ -864,17 +868,6 @@ void RendererImplemented::SetTextures(Shader* shader, Effekseer::TextureData** t
 			GetDevice()->SetTexture(i, (IDirect3DTexture9*)textures[i]->UserPtr);
 		}
 	}
-
-	//GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-	//GetDevice()->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
-	//GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-	//GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-
-	//GetDevice()->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-	//GetDevice()->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
-	//GetDevice()->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_CURRENT);
-	//GetDevice()->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
-	//GetDevice()->SetTextureStageState(1, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 }
 
 //----------------------------------------------------------------------------------

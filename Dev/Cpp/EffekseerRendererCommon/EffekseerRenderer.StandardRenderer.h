@@ -290,6 +290,20 @@ public:
 		{
 			((float*) (shader_->GetPixelConstantBuffer()))[0] = m_state.DistortionIntensity;
 		}
+		else
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (textures[i + 1] != nullptr)
+				{
+					((float*)(shader_->GetPixelConstantBuffer()))[i * 4] = 4.0f;
+				}
+				else
+				{
+					((float*)(shader_->GetPixelConstantBuffer()))[i * 4] = 0.0f;
+				}
+			}
+		}
 
 		shader_->SetConstantBuffer();
 
