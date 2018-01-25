@@ -100,7 +100,7 @@ void EffectNodeRibbon::LoadRendererParameter(unsigned char*& pos, Setting* setti
 
 	if( m_effect->GetVersion() >= 3)
 	{
-		RibbonTexture = RendererCommon.ColorTextureIndex;
+		RibbonTexture = RendererCommon.TextureIndex[0];
 	}
 	else
 	{

@@ -67,88 +67,25 @@ protected:
 		state.Distortion = param.Distortion;
 		state.DistortionIntensity = param.DistortionIntensity;
 
-		if (param.ColorTextureIndex >= 0)
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
 		{
-			if (state.Distortion)
-			{
-				state.TexturePtr[0] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
-			}
-			else
-			{
-				state.TexturePtr[0] = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
-			}
-		}
-		else
-		{
-			state.TexturePtr[0] = nullptr;
-		}
+			int texIndex = param.TextureIndex[i];
 
-		// Texture 1
-		if (param.ColorTextureIndex1 >= 0)
-		{
-			if (state.Distortion)
+			if (texIndex >= 0)
 			{
-				state.TexturePtr[1] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex1);
+				if (state.Distortion)
+				{
+					state.TexturePtr[i] = param.EffectPointer->GetDistortionImage(texIndex);
+				}
+				else
+				{
+					state.TexturePtr[i] = param.EffectPointer->GetColorImage(texIndex);
+				}
 			}
 			else
 			{
-				state.TexturePtr[1] = param.EffectPointer->GetColorImage(param.ColorTextureIndex1);
+				state.TexturePtr[i] = nullptr;
 			}
-		}
-		else
-		{
-			state.TexturePtr[1] = nullptr;
-		}
-
-		// Texture 2
-		if (param.ColorTextureIndex2 >= 0)
-		{
-			if (state.Distortion)
-			{
-				state.TexturePtr[2] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex2);
-			}
-			else
-			{
-				state.TexturePtr[2] = param.EffectPointer->GetColorImage(param.ColorTextureIndex2);
-			}
-		}
-		else
-		{
-			state.TexturePtr[2] = nullptr;
-		}
-
-		// Texture 3
-		if (param.ColorTextureIndex3 >= 0)
-		{
-			if (state.Distortion)
-			{
-				state.TexturePtr[3] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex3);
-			}
-			else
-			{
-				state.TexturePtr[3] = param.EffectPointer->GetColorImage(param.ColorTextureIndex3);
-			}
-		}
-		else
-		{
-			state.TexturePtr[3] = nullptr;
-		}
-
-		// Texture 4
-		if (param.ColorTextureIndex4 >= 0)
-		{
-			if (state.Distortion)
-			{
-				state.TexturePtr[4] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex4);
-			}
-			else
-			{
-				state.TexturePtr[4] = param.EffectPointer->GetColorImage(param.ColorTextureIndex4);
-			}
-		}
-		else
-		{
-			state.TexturePtr[4] = nullptr;
 		}
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);

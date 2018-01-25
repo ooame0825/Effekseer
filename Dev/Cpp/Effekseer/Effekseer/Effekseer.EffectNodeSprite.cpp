@@ -106,29 +106,29 @@ namespace Effekseer
 
 	if (m_effect->GetVersion() >= 3)
 	{
-		SpriteTexture = RendererCommon.ColorTextureIndex;
+		SpriteTexture[0] = RendererCommon.TextureIndex[0];
 	}
 	else
 	{
 		memcpy(&SpriteTexture, pos, sizeof(int));
 		pos += sizeof(int);
-		RendererCommon.ColorTextureIndex = SpriteTexture;
+		RendererCommon.TextureIndex[0] = SpriteTexture[0];
 	}
 
 	// オリジナルバージョンによる追加機能 : マルチテクスチャの取得
 	if (m_effect->GetOriginalVersion() >= 1)
 	{
-		SpriteTexture1 = RendererCommon.ColorTextureIndex1;
-		SpriteTexture2 = RendererCommon.ColorTextureIndex2;
-		SpriteTexture3 = RendererCommon.ColorTextureIndex3;
-		SpriteTexture4 = RendererCommon.ColorTextureIndex4;
+		for (int i = 1; i < MAX_TEXTURE_SUM; i++)
+		{
+			SpriteTexture[i] = RendererCommon.TextureIndex[i];
+		}
 	}
 	else
 	{
-		SpriteTexture1 = 0;
-		SpriteTexture2 = 0;
-		SpriteTexture3 = 0;
-		SpriteTexture4 = 0;
+		for (int i = 1; i < MAX_TEXTURE_SUM; i++)
+		{
+			SpriteTexture[i] = 0;
+		}
 	}
 
 	// 右手系左手系変換
@@ -167,11 +167,10 @@ void EffectNodeSprite::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.ZTest = RendererCommon.ZTest;
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
-		nodeParameter.ColorTextureIndex = SpriteTexture;
-		nodeParameter.ColorTextureIndex1 = SpriteTexture1;
-		nodeParameter.ColorTextureIndex2 = SpriteTexture2;
-		nodeParameter.ColorTextureIndex3 = SpriteTexture3;
-		nodeParameter.ColorTextureIndex4 = SpriteTexture4;
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = SpriteTexture[i];
+		}
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
@@ -194,7 +193,7 @@ void EffectNodeSprite::Rendering(const Instance& instance, Manager* manager)
 {
 	const InstanceValues& instValues = instance.rendererValues.sprite;
 	SpriteRenderer* renderer = manager->GetSpriteRenderer();
-	if( renderer != NULL )
+	if (renderer != NULL)
 	{
 		SpriteRenderer::NodeParameter nodeParameter;
 		nodeParameter.AlphaBlend = AlphaBlend;
@@ -203,11 +202,11 @@ void EffectNodeSprite::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.ZTest = RendererCommon.ZTest;
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
-		nodeParameter.ColorTextureIndex = SpriteTexture;
-		nodeParameter.ColorTextureIndex1 = SpriteTexture1;
-		nodeParameter.ColorTextureIndex2 = SpriteTexture2;
-		nodeParameter.ColorTextureIndex3 = SpriteTexture3;
-		nodeParameter.ColorTextureIndex4 = SpriteTexture4;		nodeParameter.EffectPointer = GetEffect();
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = SpriteTexture[i];
+		}
+		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
 
@@ -303,11 +302,11 @@ void EffectNodeSprite::EndRendering(Manager* manager)
 		nodeParameter.ZTest = RendererCommon.ZTest;
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
-		nodeParameter.ColorTextureIndex = SpriteTexture;
-		nodeParameter.ColorTextureIndex1 = SpriteTexture1;
-		nodeParameter.ColorTextureIndex2 = SpriteTexture2;
-		nodeParameter.ColorTextureIndex3 = SpriteTexture3;
-		nodeParameter.ColorTextureIndex4 = SpriteTexture4;		nodeParameter.EffectPointer = GetEffect();
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = SpriteTexture[i];
+		}
+		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
 

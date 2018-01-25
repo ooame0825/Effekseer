@@ -461,11 +461,11 @@ struct ParameterGenerationLocation
 
 struct ParameterRendererCommon
 {
-	int32_t				ColorTextureIndex;
-	int32_t				ColorTextureIndex1;
-	int32_t				ColorTextureIndex2;
-	int32_t				ColorTextureIndex3;
-	int32_t				ColorTextureIndex4;
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
+public:
+	int32_t				TextureIndex[MAX_TEXTURE_SUM];
 
 	AlphaBlendType		AlphaBlend;
 
@@ -589,20 +589,11 @@ struct ParameterRendererCommon
 	{
 		memset( this, 0, sizeof(ParameterRendererCommon) );
 
-		memcpy( &ColorTextureIndex, pos, sizeof(int) );
-		pos += sizeof(int);
-
-		memcpy(&ColorTextureIndex1, pos, sizeof(int));
-		pos += sizeof(int);
-
-		memcpy(&ColorTextureIndex2, pos, sizeof(int));
-		pos += sizeof(int);
-
-		memcpy(&ColorTextureIndex3, pos, sizeof(int));
-		pos += sizeof(int);
-
-		memcpy(&ColorTextureIndex4, pos, sizeof(int));
-		pos += sizeof(int);
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			memcpy(&TextureIndex[i], pos, sizeof(int));
+			pos += sizeof(int);
+		}
 
 		memcpy( &AlphaBlend, pos, sizeof(int) );
 		pos += sizeof(int);

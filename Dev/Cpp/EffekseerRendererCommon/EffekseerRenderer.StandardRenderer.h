@@ -19,9 +19,12 @@ namespace EffekseerRenderer
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-
 struct StandardRendererState
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
+public:
 	bool								DepthTest;
 	bool								DepthWrite;
 	bool								Distortion;
@@ -31,7 +34,7 @@ struct StandardRendererState
 	::Effekseer::CullingType			CullingType;
 	::Effekseer::TextureFilterType		TextureFilterType;
 	::Effekseer::TextureWrapType		TextureWrapType;
-	::Effekseer::TextureData*			TexturePtr[5];
+	::Effekseer::TextureData*			TexturePtr[MAX_TEXTURE_SUM];
 
 	StandardRendererState()
 	{

@@ -116,7 +116,13 @@ namespace Effekseer.GUI
 			set;
 		}
 
-		internal static DockNodeRendererValues DockNodeDrawingValues
+        internal static DockNodeRendererCommonValues2 DockNodeRendererCommonValues2
+        {
+            get;
+            set;
+        }
+
+        internal static DockNodeRendererValues DockNodeDrawingValues
 		{
 			get;
 			set;
@@ -206,7 +212,8 @@ namespace Effekseer.GUI
 			DockNodeGenerationLocationValues = new DockNodeGenerationLocationValues();
             DockNodeDepthValues = new DockNodeDepthValues();
 			DockNodeRendererCommonValues = new GUI.DockNodeRendererCommonValues();
-			DockNodeDrawingValues = new GUI.DockNodeRendererValues();
+            DockNodeRendererCommonValues2 = new GUI.DockNodeRendererCommonValues2();
+            DockNodeDrawingValues = new GUI.DockNodeRendererValues();
             DockNodeSoundValues = new GUI.DockNodeSoundValues();
 			DockOption = new GUI.DockOption();
 			DockGlobal = new GUI.DockGlobal();
@@ -253,7 +260,8 @@ namespace Effekseer.GUI
 			if (DockNodeGenerationLocationValues != null) DockNodeGenerationLocationValues.Close();
             if (DockNodeDepthValues != null) DockNodeDepthValues.Close();
             if (DockNodeRendererCommonValues != null) DockNodeRendererCommonValues.Close();
-			if (DockNodeDrawingValues != null) DockNodeDrawingValues.Close();
+            if (DockNodeRendererCommonValues2 != null) DockNodeRendererCommonValues2.Close();
+            if (DockNodeDrawingValues != null) DockNodeDrawingValues.Close();
             if (DockNodeSoundValues != null) DockNodeSoundValues.Close();
 			if (DockOption != null) DockOption.Close();
 			if (DockGlobal != null) DockGlobal.Close();
@@ -277,7 +285,8 @@ namespace Effekseer.GUI
 			DockNodeGenerationLocationValues = null;
             DockNodeDepthValues = null;
 			DockNodeRendererCommonValues = null;
-			DockNodeDrawingValues = null;
+            DockNodeRendererCommonValues2 = null;
+            DockNodeDrawingValues = null;
             DockNodeSoundValues = null;
 			DockOption = null;
 			DockGlobal = null;
@@ -304,7 +313,8 @@ namespace Effekseer.GUI
 			if (DockNodeGenerationLocationValues == null) DockNodeGenerationLocationValues = new DockNodeGenerationLocationValues();
             if (DockNodeDepthValues == null) DockNodeDepthValues = new DockNodeDepthValues();
             if (DockNodeRendererCommonValues == null) DockNodeRendererCommonValues = new DockNodeRendererCommonValues();
-			if (DockNodeDrawingValues == null) DockNodeDrawingValues = new GUI.DockNodeRendererValues();
+            if (DockNodeRendererCommonValues2 == null) DockNodeRendererCommonValues2 = new DockNodeRendererCommonValues2();
+            if (DockNodeDrawingValues == null) DockNodeDrawingValues = new GUI.DockNodeRendererValues();
             if (DockNodeSoundValues == null) DockNodeSoundValues = new GUI.DockNodeSoundValues();
 			if (DockOption == null) DockOption = new GUI.DockOption();
 			if (DockGlobal == null) DockGlobal = new GUI.DockGlobal();
@@ -345,6 +355,9 @@ namespace Effekseer.GUI
 				DockNodeRendererCommonValues.Show(MainForm.Panel);
 				DockNodeRendererCommonValues.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
 
+                DockNodeRendererCommonValues2.Show(MainForm.Panel);
+                DockNodeRendererCommonValues2.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
+
                 DockNodeSoundValues.Show(MainForm.Panel);
                 DockNodeSoundValues.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
                 
@@ -378,6 +391,9 @@ namespace Effekseer.GUI
 				DockNodeRendererCommonValues.Show(MainForm.Panel);
 				DockNodeRendererCommonValues.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
 
+                DockNodeRendererCommonValues2.Show(MainForm.Panel);
+                DockNodeRendererCommonValues2.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
+
                 DockNodeSoundValues.Show(MainForm.Panel);
                 DockNodeSoundValues.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
 
@@ -410,6 +426,9 @@ namespace Effekseer.GUI
 
 				DockNodeRendererCommonValues.Show(MainForm.Panel);
 				DockNodeRendererCommonValues.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
+
+                DockNodeRendererCommonValues2.Show(MainForm.Panel);
+                DockNodeRendererCommonValues2.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
 
                 DockNodeSoundValues.Show(MainForm.Panel);
                 DockNodeSoundValues.DockTo(DockNodeDrawingValues.Pane, DockStyle.Fill, 1);
@@ -559,7 +578,12 @@ namespace Effekseer.GUI
 								return DockNodeRendererCommonValues;
 							}
 
-							if (DockNodeDrawingValues.GetType().FullName == s)
+                            if (DockNodeRendererCommonValues2.GetType().FullName == s)
+                            {
+                                return DockNodeRendererCommonValues2;
+                            }
+
+                            if (DockNodeDrawingValues.GetType().FullName == s)
 							{
 								return DockNodeDrawingValues;
 							}
@@ -688,7 +712,8 @@ namespace Effekseer.GUI
 			if (DockNodeGenerationLocationValues != null && DockNodeGenerationLocationValues.DockState == DockState.Unknown) DockNodeGenerationLocationValues = null;
             if (DockNodeDepthValues != null && DockNodeDepthValues.DockState == DockState.Unknown) DockNodeDepthValues = null;
             if (DockNodeRendererCommonValues != null && DockNodeRendererCommonValues.DockState == DockState.Unknown) DockNodeRendererCommonValues = null;
-			if (DockNodeDrawingValues != null && DockNodeDrawingValues.DockState == DockState.Unknown) DockNodeDrawingValues = null;
+            if (DockNodeRendererCommonValues2 != null && DockNodeRendererCommonValues2.DockState == DockState.Unknown) DockNodeRendererCommonValues2 = null;
+            if (DockNodeDrawingValues != null && DockNodeDrawingValues.DockState == DockState.Unknown) DockNodeDrawingValues = null;
 			if (DockNodeSoundValues != null && DockNodeSoundValues.DockState == DockState.Unknown) DockNodeSoundValues = null;
 			if (DockOption != null && DockOption.DockState == DockState.Unknown) DockOption = null;
 			if (DockGlobal != null && DockGlobal.DockState == DockState.Unknown) DockGlobal = null;

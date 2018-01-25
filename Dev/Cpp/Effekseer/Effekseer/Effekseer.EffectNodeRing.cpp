@@ -72,7 +72,7 @@ void EffectNodeRing::LoadRendererParameter(unsigned char*& pos, Setting* setting
 
 	if( m_effect->GetVersion() >= 3)
 	{
-		RingTexture = RendererCommon.ColorTextureIndex;
+		RingTexture = RendererCommon.TextureIndex[0];
 	}
 	else
 	{

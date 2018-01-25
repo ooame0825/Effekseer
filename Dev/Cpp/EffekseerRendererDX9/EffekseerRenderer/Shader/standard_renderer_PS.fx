@@ -1,7 +1,7 @@
 Texture2D	g_texture		: register( t0 );
-sampler2D	g_sampler[5]	: register( s0 );
+sampler2D	g_sampler[4]	: register( s0 );
 
-float4 g_setTexture[4]		: register( c0 );
+float4 g_setTexture[3]		: register( c0 );
 
 struct PS_Input
 {
@@ -13,7 +13,7 @@ float4 PS( const PS_Input Input ) : COLOR
 {
 	float4 Output = Input.Color * tex2D(g_sampler[0], Input.UV);
 	
-	for (int i = 1; i < 5; i++)
+	for (int i = 1; i < 4; i++)
 	{
 		int blend_type = g_setTexture[i - 1];
 		float4 SrcColor = tex2D(g_sampler[i], Input.UV);
@@ -39,7 +39,6 @@ float4 PS( const PS_Input Input ) : COLOR
 		{
 			Output.rgb *= SrcColor.rgb;
 		}
-
 	}
 
 	return Output;

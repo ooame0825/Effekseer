@@ -85,6 +85,7 @@
     <Compile Include="Data\CommonValues.cs" />
     <Compile Include="Data\Define.cs" />
     <Compile Include="Data\GenerationLocationValues.cs" />
+    <Compile Include="Data\RendererCommonValues2.cs" />
     <Compile Include="Data\RendererValues.cs" />
     <Compile Include="Data\IO.cs" />
     <Compile Include="Data\Node.cs" />

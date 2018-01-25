@@ -77,6 +77,7 @@ class EffectNodeSprite
 	friend class Instance;
 
 public:
+	static const int MAX_TEXTURE_SUM = 4;
 
 	struct InstanceValues
 	{
@@ -132,11 +133,7 @@ public:
 	SpriteColorParameter SpriteColor;
 	SpritePositionParameter SpritePosition;
 
-	int SpriteTexture;
-	int SpriteTexture1;
-	int SpriteTexture2;
-	int SpriteTexture3;
-	int SpriteTexture4;
+	int SpriteTexture[MAX_TEXTURE_SUM];
 
 	EffectNodeSprite( Effect* effect, unsigned char*& pos )
 		: EffectNodeImplemented(effect, pos)

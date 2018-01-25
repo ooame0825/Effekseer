@@ -308,7 +308,8 @@ namespace Effekseer.GUI
 				setDockWindow(Properties.Resources.Scale, typeof(DockNodeScaleValues), Properties.Resources.IconScale);
 				setDockWindow(Properties.Resources.Scale, typeof(DockNodeDepthValues), Properties.Resources.IconScale);
 				setDockWindow(Properties.Resources.BasicRenderSettings, typeof(DockNodeRendererCommonValues), Properties.Resources.IconRendererCommon);
-				setDockWindow(Properties.Resources.RenderSettings, typeof(DockNodeRendererValues), Properties.Resources.IconRenderer);
+                setDockWindow(Properties.Resources.BasicRenderSettings2, typeof(DockNodeRendererCommonValues2), Properties.Resources.IconRendererCommon);
+                setDockWindow(Properties.Resources.RenderSettings, typeof(DockNodeRendererValues), Properties.Resources.IconRenderer);
 				setDockWindow(Properties.Resources.Sound, typeof(DockNodeSoundValues), Properties.Resources.IconSound);
 				setDockWindow(Properties.Resources.FCurves, typeof(DockFCurves), Properties.Resources.IconFCurve);
 				setDockWindow(Properties.Resources.ViewerControls, typeof(DockViewerController), Properties.Resources.IconViewer);

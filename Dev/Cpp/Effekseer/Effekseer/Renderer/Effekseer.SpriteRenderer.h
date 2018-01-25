@@ -23,16 +23,13 @@ namespace Effekseer
 class SpriteRenderer
 {
 public:
+	static const int MAX_TEXTURE_SUM = 4;
 
 	struct NodeParameter
 	{
 		Effect*				EffectPointer;
-		int32_t				ColorTextureIndex;
-		int32_t				ColorTextureIndex1;
-		int32_t				ColorTextureIndex2;
-		int32_t				ColorTextureIndex3;
-		int32_t				ColorTextureIndex4;
-		AlphaBlendType			AlphaBlend;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
+		AlphaBlendType		AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType	TextureWrap;
 		bool				ZTest;

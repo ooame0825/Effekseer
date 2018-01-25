@@ -8,7 +8,7 @@ namespace Effekseer.Data
 {
 	public class RendererCommonValues
 	{
-		[Name(language = Language.Japanese, value = "色/歪み画像")]
+		[Name(language = Language.Japanese, value = "ベース\n\n色/歪み画像")]
 		[Description(language = Language.Japanese, value = "色/歪みを表す画像")]
 		[Name(language = Language.English, value = "Texture")]
 		[Description(language = Language.English, value = "Image that represents color/distortion")]
@@ -17,6 +17,17 @@ namespace Effekseer.Data
 			get;
 			private set;
 		}
+
+        // α テクスチャ
+        [Name(language = Language.Japanese, value = "ベース\n\nαテクスチャ")]
+        [Description(language = Language.Japanese, value = "α値を使用する画像")]
+        [Name(language = Language.English, value = "αTexture")]
+        [Description(language = Language.English, value = "Image that represents α")]
+        public Value.PathForImage AlphaTexture
+        {
+            get;
+            private set;
+        }
 
         [Name(language = Language.Japanese, value = "ブレンド")]
 		[Name(language = Language.English, value = "Blend")]
@@ -135,42 +146,22 @@ namespace Effekseer.Data
 		[Name(language = Language.English, value = "Distortion\nIntensity")]
 		public Value.Float DistortionIntensity { get; private set; }
 
-        // For Multi Texture
-        [Name(language = Language.Japanese, value = "Texture2")]
-        [Description(language = Language.Japanese, value = "色/歪みを表す画像2")]
+        // Texture for composition
+        [Name(language = Language.Japanese, value = "合成用\n\n色/歪み画像")]
+        [Description(language = Language.Japanese, value = "合成用の色/歪みを表す画像2")]
         [Name(language = Language.English, value = "Texture2")]
         [Description(language = Language.English, value = "Image that represents color/distortion2")]
-        public Value.PathForImage ColorTexture1
-        {
-            get;
-            private set;
-        }
-
-        [Name(language = Language.Japanese, value = "Texture3")]
-        [Description(language = Language.Japanese, value = "色/歪みを表す画像3")]
-        [Name(language = Language.English, value = "Texture3")]
-        [Description(language = Language.English, value = "Image that represents color/distortion3")]
         public Value.PathForImage ColorTexture2
         {
             get;
             private set;
         }
 
-        [Name(language = Language.Japanese, value = "Texture4")]
-        [Description(language = Language.Japanese, value = "色/歪みを表す画像4")]
-        [Name(language = Language.English, value = "Texture4")]
-        [Description(language = Language.English, value = "Image that represents color/distortion4")]
-        public Value.PathForImage ColorTexture3
-        {
-            get;
-            private set;
-        }
-
-        [Name(language = Language.Japanese, value = "Texture5")]
-        [Description(language = Language.Japanese, value = "色/歪みを表す画像5")]
-        [Name(language = Language.English, value = "Texture5")]
-        [Description(language = Language.English, value = "Image that represents color/distortion5")]
-        public Value.PathForImage ColorTexture4
+        [Name(language = Language.Japanese, value = "合成用\n\nαテクスチャ")]
+        [Description(language = Language.Japanese, value = "α値を使用する画像2")]
+        [Name(language = Language.English, value = "αTexture2")]
+        [Description(language = Language.English, value = "Image that represents α2")]
+        public Value.PathForImage AlphaTexture2
         {
             get;
             private set;
@@ -179,6 +170,7 @@ namespace Effekseer.Data
         internal RendererCommonValues()
 		{
             ColorTexture = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
+            AlphaTexture = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
 
             AlphaBlend = new Value.Enum<AlphaBlendType>(AlphaBlendType.Blend);
 			Filter = new Value.Enum<FilterType>(FilterType.Linear);
@@ -208,10 +200,8 @@ namespace Effekseer.Data
 			Distortion = new Value.Boolean(false);
 			DistortionIntensity = new Value.Float(1.0f, float.MaxValue, float.MinValue, 0.1f);
 
-            ColorTexture1 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
             ColorTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
-            ColorTexture3 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
-            ColorTexture4 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
+            AlphaTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
         }
 
 		public class NoneParamater

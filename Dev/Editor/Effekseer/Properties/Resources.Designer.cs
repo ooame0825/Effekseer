@@ -107,6 +107,15 @@ namespace Effekseer.Properties {
         }
         
         /// <summary>
+        ///   描画共通2 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string BasicRenderSettings2 {
+            get {
+                return ResourceManager.GetString("BasicRenderSettings2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   共通 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string BasicSettings {

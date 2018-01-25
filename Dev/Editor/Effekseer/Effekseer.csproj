@@ -300,6 +300,12 @@
     <Compile Include="GUI\DockNodeDepthValues.designer.cs">
       <DependentUpon>DockNodeDepthValues.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DockNodeRendererCommonValues2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DockNodeRendererCommonValues2.Designer.cs">
+      <DependentUpon>DockNodeRendererCommonValues2.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\DockNodeRendererValues.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -494,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DockNodeDepthValues.resx">
       <DependentUpon>DockNodeDepthValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DockNodeRendererCommonValues2.resx">
+      <DependentUpon>DockNodeRendererCommonValues2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DockNodeRendererValues.resx">
       <DependentUpon>DockNodeRendererValues.cs</DependentUpon>

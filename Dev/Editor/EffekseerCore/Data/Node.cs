@@ -64,7 +64,14 @@ namespace Effekseer.Data
 			private set;
 		}
 
-		[IO(Export = true)]
+        [IO(Export = true)]
+        public RendererCommonValues2 RendererCommonValues2
+        {
+            get;
+            private set;
+        }
+
+        [IO(Export = true)]
 		public RendererValues DrawingValues
 		{
 			get;
@@ -93,6 +100,7 @@ namespace Effekseer.Data
 			GenerationLocationValues = new Data.GenerationLocationValues();
             DepthValues = new DepthValues();
 			RendererCommonValues = new Data.RendererCommonValues();
+            RendererCommonValues2 = new Data.RendererCommonValues2();
             DrawingValues = new RendererValues();
             SoundValues = new SoundValues();
 		}

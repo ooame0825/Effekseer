@@ -89,7 +89,7 @@ void EffectNodeModel::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.ModelIndex = ModelIndex;
-		nodeParameter.ColorTextureIndex = RendererCommon.ColorTextureIndex;
+		nodeParameter.ColorTextureIndex = RendererCommon.TextureIndex[0];
 		nodeParameter.Culling = Culling;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.Lighting = Lighting;
@@ -126,7 +126,7 @@ void EffectNodeModel::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.ModelIndex = ModelIndex;
-		nodeParameter.ColorTextureIndex = RendererCommon.ColorTextureIndex;
+		nodeParameter.ColorTextureIndex = RendererCommon.TextureIndex[0];
 		nodeParameter.Culling = Culling;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.Lighting = Lighting;
@@ -186,7 +186,7 @@ void EffectNodeModel::EndRendering(Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.ModelIndex = ModelIndex;
-		nodeParameter.ColorTextureIndex = RendererCommon.ColorTextureIndex;
+		nodeParameter.ColorTextureIndex = RendererCommon.TextureIndex[0];
 		nodeParameter.Culling = Culling;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.Lighting = Lighting;

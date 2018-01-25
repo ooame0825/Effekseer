@@ -50,7 +50,7 @@ void EffectNodeTrack::LoadRendererParameter(unsigned char*& pos, Setting* settin
 	TrackColorRightMiddle.load( pos, m_effect->GetVersion() );
 
 	AlphaBlend = RendererCommon.AlphaBlend;
-	TrackTexture = RendererCommon.ColorTextureIndex;
+	TrackTexture = RendererCommon.TextureIndex[0];
 
 	EffekseerPrintDebug("TrackColorLeft : %d\n", TrackColorLeft.type );
 	EffekseerPrintDebug("TrackColorLeftMiddle : %d\n", TrackColorLeftMiddle.type );

@@ -586,7 +586,7 @@ EffectNode* EffectNodeImplemented::GetChild(int index) const
 EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 {
 	EffectBasicRenderParameter param;
-	param.ColorTextureIndex = RendererCommon.ColorTextureIndex;
+	param.ColorTextureIndex = RendererCommon.TextureIndex[0];
 	param.AlphaBlend = RendererCommon.AlphaBlend;
 	param.Distortion = RendererCommon.Distortion;
 	param.DistortionIntensity = RendererCommon.DistortionIntensity;
@@ -599,7 +599,7 @@ EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 
 void EffectNodeImplemented::SetBasicRenderParameter(EffectBasicRenderParameter param)
 {
-	RendererCommon.ColorTextureIndex = param.ColorTextureIndex;
+	RendererCommon.TextureIndex[0] = param.ColorTextureIndex;
 	RendererCommon.AlphaBlend = param.AlphaBlend;
 	RendererCommon.Distortion = param.Distortion;
 	RendererCommon.DistortionIntensity = param.DistortionIntensity;

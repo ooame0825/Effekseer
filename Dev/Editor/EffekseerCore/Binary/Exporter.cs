@@ -73,8 +73,8 @@ namespace Effekseer.Binary
 									}
 								}
 
-                                // ColorTexture1
-                                relative_path = _node.RendererCommonValues.ColorTexture1.RelativePath;
+                                // AlphaTexture
+                                relative_path = _node.RendererCommonValues.AlphaTexture.RelativePath;
                                 if (relative_path != string.Empty)
                                 {
                                     if (_node.RendererCommonValues.Distortion.Value)
@@ -113,28 +113,8 @@ namespace Effekseer.Binary
                                     }
                                 }
 
-                                // ColorTexture3
-                                relative_path = _node.RendererCommonValues.ColorTexture3.RelativePath;
-                                if (relative_path != string.Empty)
-                                {
-                                    if (_node.RendererCommonValues.Distortion.Value)
-                                    {
-                                        if (!distortionTextures.Contains(relative_path))
-                                        {
-                                            distortionTextures.Add(relative_path);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!textures.Contains(relative_path))
-                                        {
-                                            textures.Add(relative_path);
-                                        }
-                                    }
-                                }
-
-                                // ColorTexture4
-                                relative_path = _node.RendererCommonValues.ColorTexture4.RelativePath;
+                                // AlphaTexture2
+                                relative_path = _node.RendererCommonValues.AlphaTexture2.RelativePath;
                                 if (relative_path != string.Empty)
                                 {
                                     if (_node.RendererCommonValues.Distortion.Value)
