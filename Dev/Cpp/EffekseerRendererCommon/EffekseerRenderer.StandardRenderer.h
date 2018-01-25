@@ -35,6 +35,7 @@ public:
 	::Effekseer::TextureFilterType		TextureFilterType;
 	::Effekseer::TextureWrapType		TextureWrapType;
 	::Effekseer::TextureData*			TexturePtr[MAX_TEXTURE_SUM];
+	int32_t								MultiTexBlendType;
 
 	StandardRendererState()
 	{
@@ -51,6 +52,7 @@ public:
 		{
 			it = nullptr;
 		}
+		MultiTexBlendType = 0;
 	}
 
 	bool operator != (const StandardRendererState state)
@@ -67,6 +69,7 @@ public:
 		{
 			if (TexturePtr[i] != state.TexturePtr[i]) return true;
 		}
+		if (state.MultiTexBlendType != MultiTexBlendType) return true;
 		return false;
 	}
 };
@@ -253,9 +256,9 @@ public:
 
 		m_renderer->BeginShader(shader_);
 
-		Effekseer::TextureData* textures[5];
+		Effekseer::TextureData* textures[4];
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			if (m_state.TexturePtr[i] != nullptr)
 			{
@@ -283,7 +286,7 @@ public:
 		}
 		else
 		{
-			m_renderer->SetTextures(shader_, textures, 5);
+			m_renderer->SetTextures(shader_, textures, 4);
 		}
 
 		((Effekseer::Matrix44*)(shader_->GetVertexConstantBuffer()))[0] = mCamera;
@@ -295,17 +298,21 @@ public:
 		}
 		else
 		{
+			// テクスチャのセット状況
 			for (int i = 0; i < 4; i++)
 			{
-				if (textures[i + 1] != nullptr)
+				if (textures[i] != nullptr)
 				{
-					((float*)(shader_->GetPixelConstantBuffer()))[i * 4] = 4.0f;
+					((float*)(shader_->GetPixelConstantBuffer()))[i * 4] = 1.0f;
 				}
 				else
 				{
 					((float*)(shader_->GetPixelConstantBuffer()))[i * 4] = 0.0f;
 				}
 			}
+
+			// 合成用のブレンドモードをセット
+			((float*)(shader_->GetPixelConstantBuffer()))[4 * 4] = m_state.MultiTexBlendType;
 		}
 
 		shader_->SetConstantBuffer();

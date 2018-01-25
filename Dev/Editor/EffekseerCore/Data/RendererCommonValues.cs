@@ -146,27 +146,6 @@ namespace Effekseer.Data
 		[Name(language = Language.English, value = "Distortion\nIntensity")]
 		public Value.Float DistortionIntensity { get; private set; }
 
-        // Texture for composition
-        [Name(language = Language.Japanese, value = "合成用\n\n色/歪み画像")]
-        [Description(language = Language.Japanese, value = "合成用の色/歪みを表す画像2")]
-        [Name(language = Language.English, value = "Texture2")]
-        [Description(language = Language.English, value = "Image that represents color/distortion2")]
-        public Value.PathForImage ColorTexture2
-        {
-            get;
-            private set;
-        }
-
-        [Name(language = Language.Japanese, value = "合成用\n\nαテクスチャ")]
-        [Description(language = Language.Japanese, value = "α値を使用する画像2")]
-        [Name(language = Language.English, value = "αTexture2")]
-        [Description(language = Language.English, value = "Image that represents α2")]
-        public Value.PathForImage AlphaTexture2
-        {
-            get;
-            private set;
-        }
-
         internal RendererCommonValues()
 		{
             ColorTexture = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
@@ -199,9 +178,6 @@ namespace Effekseer.Data
 
 			Distortion = new Value.Boolean(false);
 			DistortionIntensity = new Value.Float(1.0f, float.MaxValue, float.MinValue, 0.1f);
-
-            ColorTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
-            AlphaTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
         }
 
 		public class NoneParamater

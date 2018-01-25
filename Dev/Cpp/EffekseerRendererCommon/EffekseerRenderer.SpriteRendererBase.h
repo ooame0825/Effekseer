@@ -88,6 +88,8 @@ protected:
 			}
 		}
 
+		state.MultiTexBlendType = param.MultiTexBlendType;
+
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 
 		renderer->GetStandardRenderer()->BeginRenderingAndRenderingIfRequired(count * 4, m_ringBufferOffset, (void*&) m_ringBufferData);

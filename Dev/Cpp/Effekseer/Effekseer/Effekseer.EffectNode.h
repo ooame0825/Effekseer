@@ -483,6 +483,8 @@ public:
 	
 	BindType			ColorBindType;
 
+	int32_t				MultiTexBlendType;
+
 	enum
 	{
 		FADEIN_ON = 1,
@@ -585,13 +587,17 @@ public:
 		memset( this, 0, sizeof(ParameterRendererCommon) );
 	}
 
-	void load( uint8_t*& pos, int32_t version )
+	void load( uint8_t*& pos, int32_t version, int32_t original_version)
 	{
 		memset( this, 0, sizeof(ParameterRendererCommon) );
 
-		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		memcpy(&TextureIndex[0], pos, sizeof(int));
+		pos += sizeof(int);
+
+		if (original_version >= 1)
 		{
-			memcpy(&TextureIndex[i], pos, sizeof(int));
+			// α画像取得
+			memcpy(&TextureIndex[1], pos, sizeof(int));
 			pos += sizeof(int);
 		}
 
@@ -725,6 +731,19 @@ public:
 			memcpy(&DistortionIntensity, pos, sizeof(float));
 			pos += sizeof(float);
 			
+		}
+
+		if (original_version >= 1)
+		{
+			// 合成用テクスチャ取得
+			memcpy(&TextureIndex[2], pos, sizeof(int));
+			pos += sizeof(int);
+			memcpy(&TextureIndex[3], pos, sizeof(int));
+			pos += sizeof(int);
+
+			// ブレンド取得
+			memcpy(&MultiTexBlendType, pos, sizeof(int));
+			pos += sizeof(int);
 		}
 	}
 

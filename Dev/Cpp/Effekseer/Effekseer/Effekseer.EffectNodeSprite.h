@@ -134,6 +134,7 @@ public:
 	SpritePositionParameter SpritePosition;
 
 	int SpriteTexture[MAX_TEXTURE_SUM];
+	int32_t MultiTexBlendType;
 
 	EffectNodeSprite( Effect* effect, unsigned char*& pos )
 		: EffectNodeImplemented(effect, pos)

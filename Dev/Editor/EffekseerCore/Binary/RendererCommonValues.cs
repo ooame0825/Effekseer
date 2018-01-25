@@ -46,35 +46,6 @@ namespace Effekseer.Binary
                     data.Add((-1).GetBytes());
                     //hasTexture = false;
                 }
-
-                // texture 2
-                if (value.ColorTexture2.RelativePath != string.Empty &&
-                    texture_and_index.ContainsKey(value.ColorTexture2.RelativePath) &&
-                    texInfo.Load(value.ColorTexture2.AbsolutePath))
-                {
-                    data.Add(texture_and_index[value.ColorTexture2.RelativePath].GetBytes());
-                    hasTexture = true;
-                }
-                else
-                {
-                    data.Add((-1).GetBytes());
-                    //hasTexture = false;
-                }
-
-                // texture 4
-                if (value.AlphaTexture2.RelativePath != string.Empty &&
-                    texture_and_index.ContainsKey(value.AlphaTexture2.RelativePath) &&
-                    texInfo.Load(value.AlphaTexture2.AbsolutePath))
-                {
-                    data.Add(texture_and_index[value.AlphaTexture2.RelativePath].GetBytes());
-                    hasTexture = true;
-                }
-                else
-                {
-                    data.Add((-1).GetBytes());
-                    //hasTexture = false;
-                }
-
             }
             else
 			{
@@ -103,34 +74,6 @@ namespace Effekseer.Binary
                 {
                     data.Add((-1).GetBytes());
                    //hasTexture = false;
-                }
-
-                // texture 2
-                if (value.ColorTexture2.RelativePath != string.Empty &&
-                    texture_and_index.ContainsKey(value.ColorTexture2.RelativePath) &&
-                    texInfo.Load(value.ColorTexture2.AbsolutePath))
-                {
-                    data.Add(texture_and_index[value.ColorTexture2.RelativePath].GetBytes());
-                    hasTexture = true;
-                }
-                else
-                {
-                    data.Add((-1).GetBytes());
-                    //hasTexture = false;
-                }
-
-                // alpha texture 2
-                if (value.AlphaTexture2.RelativePath != string.Empty &&
-                    texture_and_index.ContainsKey(value.AlphaTexture2.RelativePath) &&
-                    texInfo.Load(value.AlphaTexture2.AbsolutePath))
-                {
-                    data.Add(texture_and_index[value.AlphaTexture2.RelativePath].GetBytes());
-                    hasTexture = true;
-                }
-                else
-                {
-                    data.Add((-1).GetBytes());
-                    //hasTexture = false;
                 }
             }
 			

@@ -122,6 +122,8 @@ namespace Effekseer
 		{
 			SpriteTexture[i] = RendererCommon.TextureIndex[i];
 		}
+
+		MultiTexBlendType = RendererCommon.MultiTexBlendType;
 	}
 	else
 	{
@@ -171,6 +173,7 @@ void EffectNodeSprite::BeginRendering(int32_t count, Manager* manager)
 		{
 			nodeParameter.TextureIndex[i] = SpriteTexture[i];
 		}
+		nodeParameter.MultiTexBlendType = MultiTexBlendType;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
@@ -216,6 +219,8 @@ void EffectNodeSprite::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = MultiTexBlendType;
 
 		SpriteRenderer::InstanceParameter instanceParameter;
 		instValues._color.setValueToArg( instanceParameter.AllColor );

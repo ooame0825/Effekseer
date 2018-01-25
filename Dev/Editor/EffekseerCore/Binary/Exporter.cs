@@ -93,43 +93,24 @@ namespace Effekseer.Binary
                                     }
                                 }
 
-                                // ColorTexture2
-                                relative_path = _node.RendererCommonValues.ColorTexture2.RelativePath;
+                                // 合成用テクスチャ
+                                // ColorTexture
+                                relative_path = _node.RendererCommonValues2.ColorTexture2.RelativePath;
                                 if (relative_path != string.Empty)
                                 {
-                                    if (_node.RendererCommonValues.Distortion.Value)
+                                    if (!textures.Contains(relative_path))
                                     {
-                                        if (!distortionTextures.Contains(relative_path))
-                                        {
-                                            distortionTextures.Add(relative_path);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!textures.Contains(relative_path))
-                                        {
-                                            textures.Add(relative_path);
-                                        }
+                                        textures.Add(relative_path);
                                     }
                                 }
 
-                                // AlphaTexture2
-                                relative_path = _node.RendererCommonValues.AlphaTexture2.RelativePath;
+                                // AlphaTexture
+                                relative_path = _node.RendererCommonValues2.AlphaTexture2.RelativePath;
                                 if (relative_path != string.Empty)
                                 {
-                                    if (_node.RendererCommonValues.Distortion.Value)
+                                    if (!textures.Contains(relative_path))
                                     {
-                                        if (!distortionTextures.Contains(relative_path))
-                                        {
-                                            distortionTextures.Add(relative_path);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!textures.Contains(relative_path))
-                                        {
-                                            textures.Add(relative_path);
-                                        }
+                                        textures.Add(relative_path);
                                     }
                                 }
                             }
@@ -445,8 +426,10 @@ namespace Effekseer.Binary
 				node_data.Add(n.DepthValues.SoftParticle.Value.GetBytes());
 
                 node_data.Add(RendererCommonValues.GetBytes(n.RendererCommonValues, texture_and_index, distortionTexture_and_index));
+                // 合成用テクスチャデータ出力
+                node_data.Add(RendererCommonValues2.GetBytes(n.RendererCommonValues2, texture_and_index, distortionTexture_and_index));
 
-				if (isRenderParamExported)
+                if (isRenderParamExported)
 				{
 					node_data.Add(RendererValues.GetBytes(n.DrawingValues, texture_and_index, normalTexture_and_index, model_and_index));
 				}

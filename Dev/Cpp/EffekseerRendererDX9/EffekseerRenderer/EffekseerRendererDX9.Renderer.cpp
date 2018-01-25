@@ -364,11 +364,14 @@ bool RendererImplemented::Initialize( LPDIRECT3DDEVICE9 device )
 	m_shader->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2);
 	m_shader->SetVertexRegisterCount(8);
 
-	m_shader->SetPixelConstantBufferSize(sizeof(float) * 4 * 4);
-	m_shader->SetPixelRegisterCount(4);
+	m_shader->SetPixelConstantBufferSize(sizeof(float) * 4 * 5);
+	m_shader->SetPixelRegisterCount(5);
 
 	m_shader_no_texture->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2);
 	m_shader_no_texture->SetVertexRegisterCount(8);
+
+	m_shader_no_texture->SetPixelConstantBufferSize(sizeof(float) * 4 * 5);
+	m_shader_no_texture->SetPixelRegisterCount(5);
 
 	m_shader_distortion->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2);
 	m_shader_distortion->SetVertexRegisterCount(8);

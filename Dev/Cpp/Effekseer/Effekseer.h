@@ -2081,6 +2081,8 @@ public:
 		float				DepthOffset;
 		bool				IsDepthOffsetScaledWithCamera;
 		bool				IsDepthOffsetScaledWithParticleScale;
+
+		int32_t				MultiTexBlendType;
 	};
 
 	struct InstanceParameter

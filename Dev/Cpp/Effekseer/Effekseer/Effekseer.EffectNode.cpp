@@ -496,7 +496,7 @@ void EffectNodeImplemented::LoadParameter(unsigned char*& pos, EffectNode* paren
 
 		if( m_effect->GetVersion() >= 3)
 		{
-			RendererCommon.load( pos, m_effect->GetVersion() );
+			RendererCommon.load( pos, m_effect->GetVersion(), m_effect->GetOriginalVersion());
 		}
 		else
 		{
