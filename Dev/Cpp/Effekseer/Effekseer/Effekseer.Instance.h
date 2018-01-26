@@ -11,6 +11,7 @@
 #include "Effekseer.Matrix43.h"
 #include "Effekseer.RectF.h"
 #include "Effekseer.Color.h"
+#include "Effekseer.IntrusiveList.h"
 
 #include "Effekseer.EffectNodeSprite.h"
 #include "Effekseer.EffectNodeRibbon.h"
@@ -30,7 +31,7 @@ namespace Effekseer
 /**
 	@brief	エフェクトの実体
 */
-class Instance
+class Instance : public IntrusiveList<Instance>::Node
 {
 	friend class Manager;
 	friend class InstanceContainer;
@@ -245,8 +246,11 @@ public:
 	// 親の変換用行列
 	Matrix43		m_ParentMatrix43;
 
-	// 行列が計算済かどうか
-	bool			m_MatrixCalculated;
+	// 変換用行列が計算済かどうか
+	bool			m_GlobalMatrix43Calculated;
+
+	// 親の変換用行列が計算済かどうか
+	bool			m_ParentMatrix43Calculated;
 
 	/* 時間を進めるかどうか? */
 	bool			m_stepTime;
