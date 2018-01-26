@@ -89,7 +89,10 @@ void EffectNodeModel::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.ModelIndex = ModelIndex;
-		nodeParameter.ColorTextureIndex = RendererCommon.TextureIndex[0];
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}
 		nodeParameter.Culling = Culling;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.Lighting = Lighting;
@@ -104,6 +107,8 @@ void EffectNodeModel::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		renderer->BeginRendering(nodeParameter, count, m_userData);
 	}
@@ -126,7 +131,10 @@ void EffectNodeModel::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.ModelIndex = ModelIndex;
-		nodeParameter.ColorTextureIndex = RendererCommon.TextureIndex[0];
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}		
 		nodeParameter.Culling = Culling;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.Lighting = Lighting;
@@ -141,6 +149,8 @@ void EffectNodeModel::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+		
+		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		ModelRenderer::InstanceParameter instanceParameter;
 		instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
@@ -186,7 +196,10 @@ void EffectNodeModel::EndRendering(Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.ModelIndex = ModelIndex;
-		nodeParameter.ColorTextureIndex = RendererCommon.TextureIndex[0];
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}			
 		nodeParameter.Culling = Culling;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.Lighting = Lighting;
@@ -201,6 +214,8 @@ void EffectNodeModel::EndRendering(Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		renderer->EndRendering( nodeParameter, m_userData );
 	}

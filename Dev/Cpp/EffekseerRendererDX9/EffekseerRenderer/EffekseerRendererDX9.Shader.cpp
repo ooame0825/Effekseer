@@ -193,11 +193,10 @@ void Shader::SetConstantBuffer()
 
 	if (m_pixelRegisterCount > 0)
 	{
-		HRESULT r = GetRenderer()->GetDevice()->SetPixelShaderConstantF(
+		GetRenderer()->GetDevice()->SetPixelShaderConstantF(
 			0,
 			(float*) m_pixelConstantBuffer,
 			m_pixelRegisterCount);
-		int a = 0;
 	}
 }
 

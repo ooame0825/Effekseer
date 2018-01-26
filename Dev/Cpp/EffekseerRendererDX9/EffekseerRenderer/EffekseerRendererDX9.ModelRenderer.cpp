@@ -144,8 +144,16 @@ ModelRenderer::ModelRenderer(
 	{
 		shaders[i]->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>));
 		shaders[i]->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>)/(sizeof(float)*4));
-		shaders[i]->SetPixelConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererPixelConstantBuffer));
-		shaders[i]->SetPixelRegisterCount(sizeof(::EffekseerRenderer::ModelRendererPixelConstantBuffer)/(sizeof(float)*4));
+		if (i == 0 || i == 2 || i == 4)
+		{
+			shaders[i]->SetPixelConstantBufferSize(sizeof(float) * 4 * 7);
+			shaders[i]->SetPixelRegisterCount(7);
+		}
+		else
+		{
+			shaders[i]->SetPixelConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererPixelConstantBuffer));
+			shaders[i]->SetPixelRegisterCount(sizeof(::EffekseerRenderer::ModelRendererPixelConstantBuffer)/(sizeof(float)*4));
+		}
 	}
 
 	m_shader_distortion_texture->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>));
@@ -157,7 +165,6 @@ ModelRenderer::ModelRenderer(
 	m_shader_distortion->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>) / (sizeof(float) * 4));
 	m_shader_distortion->SetPixelConstantBufferSize(sizeof(float) * 4);
 	m_shader_distortion->SetPixelRegisterCount(1);
-
 }
 
 //----------------------------------------------------------------------------------
@@ -239,8 +246,8 @@ ModelRenderer* ModelRenderer::Create( RendererImplemented* renderer )
 		renderer, 
 		ShaderTexture_::g_vs20_VS,
 		sizeof(ShaderTexture_::g_vs20_VS),
-		ShaderTexture_::g_ps20_PS,
-		sizeof(ShaderTexture_::g_ps20_PS),
+		ShaderTexture_::g_ps30_PS,
+		sizeof(ShaderTexture_::g_ps30_PS),
 		"ModelRendererTexture", 
 		decl );
 
@@ -248,8 +255,8 @@ ModelRenderer* ModelRenderer::Create( RendererImplemented* renderer )
 		renderer, 
 		Shader_::g_vs20_VS,
 		sizeof(Shader_::g_vs20_VS),
-		Shader_::g_ps20_PS,
-		sizeof(Shader_::g_ps20_PS),
+		Shader_::g_ps30_PS,
+		sizeof(Shader_::g_ps30_PS),
 		"ModelRenderer", 
 		decl );
 

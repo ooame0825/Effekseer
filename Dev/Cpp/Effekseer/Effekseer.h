@@ -2293,6 +2293,7 @@ namespace Effekseer
 
 class ModelRenderer
 {
+	static const int MAX_TEXTURE_SUM = 4;
 public:
 
 	struct NodeParameter
@@ -2308,7 +2309,7 @@ public:
 		bool				Lighting;
 		CullingType		Culling;
 		int32_t				ModelIndex;
-		int32_t				ColorTextureIndex;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
 		int32_t				NormalTextureIndex;
 		float				Magnification;
 		bool				IsRightHand;
@@ -2319,6 +2320,8 @@ public:
 		float				DepthOffset;
 		bool				IsDepthOffsetScaledWithCamera;
 		bool				IsDepthOffsetScaledWithParticleScale;
+
+		int					MultiTexBlendType;
 	};
 
 	struct InstanceParameter

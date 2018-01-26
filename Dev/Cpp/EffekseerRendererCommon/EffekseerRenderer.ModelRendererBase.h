@@ -50,6 +50,9 @@ struct ModelRendererPixelConstantBuffer
 class ModelRendererBase
 	: public ::Effekseer::ModelRenderer
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 protected:
 	std::vector<Effekseer::Matrix44>	m_matrixes;
 	std::vector<Effekseer::RectF>		m_uv;
@@ -277,7 +280,7 @@ public:
 		SHADER* shader_ = NULL;
 		if (distortion)
 		{
-			if (param.ColorTextureIndex >= 0)
+			if (param.TextureIndex[0] >= 0)
 			{
 				shader_ = shader_distortion_texture;
 			}
@@ -290,7 +293,7 @@ public:
 		{
 			if (param.NormalTextureIndex >= 0)
 			{
-				if (param.ColorTextureIndex >= 0)
+				if (param.TextureIndex[0] >= 0)
 				{
 					shader_ = shader_lighting_texture_normal;
 				}
@@ -301,7 +304,7 @@ public:
 			}
 			else
 			{
-				if (param.ColorTextureIndex >= 0)
+				if (param.TextureIndex[0] >= 0)
 				{
 					shader_ = shader_lighting_texture;
 				}
@@ -313,7 +316,7 @@ public:
 		}
 		else
 		{
-			if (param.ColorTextureIndex >= 0)
+			if (param.TextureIndex[0] >= 0)
 			{
 				shader_ = shader_texture;
 			}
@@ -326,34 +329,59 @@ public:
 		renderer->BeginShader(shader_);
 
 		// Select texture
-		Effekseer::TextureData* textures[2];
-		textures[0] = nullptr;
-		textures[1] = nullptr;
+		Effekseer::TextureData* textures[MAX_TEXTURE_SUM + 1] = { nullptr };
 
 		if (distortion)
 		{
-			if (param.ColorTextureIndex >= 0)
+			if (param.TextureIndex[0] >= 0)
 			{
-				textures[0] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
+				textures[0] = param.EffectPointer->GetDistortionImage(param.TextureIndex[0]);
 			}
 
 			textures[1] = renderer->GetBackground();
 		}
 		else
 		{
-			if (param.ColorTextureIndex >= 0)
+			if (param.TextureIndex[0] >= 0)
 			{
-				textures[0] = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
+				for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+				{
+					if (param.TextureIndex[i] >= 0)
+					{
+						textures[i] = param.EffectPointer->GetColorImage(param.TextureIndex[i]);
+					}
+					else
+					{
+						textures[i] = 0;
+					}
+				}
+
+				// テクスチャのセット状況
+				for (int i = 0; i < 3; i++)
+				{
+					if (textures[i + 1] != nullptr)
+					{
+						((float*)(shader_->GetPixelConstantBuffer()))[(3 + i) * 4] = 1.0f;
+					}
+					else
+					{
+						((float*)(shader_->GetPixelConstantBuffer()))[(3 + i) * 4] = 0.0f;
+					}
+				}
+
+				// 合成用のブレンドモードをセット
+				((float*)(shader_->GetPixelConstantBuffer()))[6 * 4] = (float)param.MultiTexBlendType;
+
+
 			}
 
 			if (param.NormalTextureIndex >= 0)
 			{
-				textures[1] = param.EffectPointer->GetNormalImage(param.NormalTextureIndex);
+				textures[MAX_TEXTURE_SUM] = param.EffectPointer->GetNormalImage(param.NormalTextureIndex);
 			}
 		}
-		
-		
-		renderer->SetTextures(shader_, textures, 2);
+
+		renderer->SetTextures(shader_, textures, MAX_TEXTURE_SUM + 1);
 
 		state.TextureFilterTypes[0] = param.TextureFilter;
 		state.TextureWrapTypes[0] = param.TextureWrap;
@@ -383,15 +411,15 @@ public:
 					VectorToFloat4(lightDirection, pcb->LightDirection);
 				}
 
-			{
-				ColorToFloat4(renderer->GetLightColor(), vcb->LightColor);
-				ColorToFloat4(renderer->GetLightColor(), pcb->LightColor);
-			}
+				{
+					ColorToFloat4(renderer->GetLightColor(), vcb->LightColor);
+					ColorToFloat4(renderer->GetLightColor(), pcb->LightColor);
+				}
 
-			{
-				ColorToFloat4(renderer->GetLightAmbientColor(), vcb->LightAmbientColor);
-				ColorToFloat4(renderer->GetLightAmbientColor(), pcb->LightAmbientColor);
-			}
+				{
+					ColorToFloat4(renderer->GetLightAmbientColor(), vcb->LightAmbientColor);
+					ColorToFloat4(renderer->GetLightAmbientColor(), pcb->LightAmbientColor);
+				}
 			}
 		}
 		

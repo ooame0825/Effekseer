@@ -17,16 +17,16 @@
 
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderLightingTexture_PS.h Shader/model_renderer_lighting_texture_PS.fx
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderLighting_PS.h Shader/model_renderer_lighting_PS.fx
-"%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderTexture_PS.h Shader/model_renderer_texture_PS.fx
-"%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.Shader_PS.h Shader/model_renderer_PS.fx
+
 
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderLightingNormal_PS.h Shader/model_renderer_lighting_normal_PS.fx
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_PS.h Shader/model_renderer_lighting_texture_normal_PS.fx
-
+"%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_3_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.Shader_PS.h Shader/model_renderer_PS.fx
 
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tvs_2_0 /EVS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderDistortion_VS.h Shader/model_renderer_distortion_VS.fx
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderDistortionTexture_PS.h Shader/model_renderer_distortion_texture_PS.fx
 "%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_2_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderDistortion_PS.h Shader/model_renderer_distortion_PS.fx
 
+"%DXSDK_DIR%Utilities\\bin\x86\fxc" /Zpc /Tps_3_0 /EPS /Fh Shader/EffekseerRenderer.ModelRenderer.ShaderTexture_PS.h Shader/model_renderer_texture_PS.fx
 
 pause

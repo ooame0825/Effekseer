@@ -425,9 +425,9 @@ namespace Effekseer.GUI
 				Core.EffectBehavior.Rotation.Z / 180.0f * 3.141592f);
 
 			viewer.SetScale(
-				Core.EffectBehavior.Scale.X * 0.1f,
-				Core.EffectBehavior.Scale.Y * 0.1f,
-				Core.EffectBehavior.Scale.Z * 0.1f);
+				Core.EffectBehavior.Scale.X,
+				Core.EffectBehavior.Scale.Y,
+				Core.EffectBehavior.Scale.Z);
 
 			viewer.SetTargetLocation(
 				Core.EffectBehavior.TargetLocation.X,
@@ -471,7 +471,7 @@ namespace Effekseer.GUI
 				viewer.SetCullingParameter(false, 0.0f, 0.0f, 0.0f, 0.0f);
 			}
 
-			var data = Binary.Exporter.Export(Core.Option.Magnification);
+			var data = Binary.Exporter.Export(Core.Option.Magnification * 0.1f);
 			fixed (byte* p = &data[0])
 			{
 				viewer.LoadEffect(new IntPtr(p), data.Length, Core.FullPath);

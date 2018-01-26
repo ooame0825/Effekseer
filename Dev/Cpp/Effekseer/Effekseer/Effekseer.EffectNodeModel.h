@@ -26,6 +26,9 @@ class EffectNodeModel
 	friend class Effect;
 	friend class Instance;
 
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 public:
 
 	struct InstanceValues

@@ -77,7 +77,8 @@ public:
 template<typename RENDERER, typename SHADER, typename VERTEX, typename VERTEX_DISTORTION>
 class StandardRenderer
 {
-
+private:
+	static const int MAX_TEXTURE_SUM = 4;
 private:
 	RENDERER*	m_renderer;
 	SHADER*		m_shader;
@@ -256,9 +257,9 @@ public:
 
 		m_renderer->BeginShader(shader_);
 
-		Effekseer::TextureData* textures[4];
+		Effekseer::TextureData* textures[MAX_TEXTURE_SUM];
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
 		{
 			if (m_state.TexturePtr[i] != nullptr)
 			{
