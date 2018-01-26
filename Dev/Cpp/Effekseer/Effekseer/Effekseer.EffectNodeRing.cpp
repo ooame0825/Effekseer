@@ -188,7 +188,12 @@ void EffectNodeRing::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.ZTest = RendererCommon.ZTest;
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
-		nodeParameter.ColorTextureIndex = RingTexture;
+
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}
+
 		nodeParameter.VertexCount = VertexCount;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
@@ -200,6 +205,8 @@ void EffectNodeRing::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		renderer->BeginRendering( nodeParameter, count, m_userData );
 	}
@@ -223,7 +230,12 @@ void EffectNodeRing::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
 		nodeParameter.VertexCount = VertexCount;
-		nodeParameter.ColorTextureIndex = RingTexture;
+
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}
+
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
 
@@ -233,6 +245,8 @@ void EffectNodeRing::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		color _outerColor;
 		color _centerColor;
@@ -293,7 +307,12 @@ void EffectNodeRing::EndRendering(Manager* manager)
 		nodeParameter.ZTest = RendererCommon.ZTest;
 		nodeParameter.ZWrite = RendererCommon.ZWrite;
 		nodeParameter.Billboard = Billboard;
-		nodeParameter.ColorTextureIndex = RingTexture;
+
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}
+
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;
@@ -304,6 +323,8 @@ void EffectNodeRing::EndRendering(Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		renderer->EndRendering( nodeParameter, m_userData );
 	}

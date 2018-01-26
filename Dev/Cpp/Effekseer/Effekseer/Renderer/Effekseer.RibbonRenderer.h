@@ -22,12 +22,15 @@ namespace Effekseer
 
 class RibbonRenderer
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 public:
 
 	struct NodeParameter
 	{
 		Effect*				EffectPointer;
-		int32_t				ColorTextureIndex;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
 		AlphaBlendType			AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType	TextureWrap;
@@ -37,6 +40,8 @@ public:
 
 		bool				Distortion;
 		float				DistortionIntensity;
+
+		int					MultiTexBlendType;
 	};
 
 	struct InstanceParameter

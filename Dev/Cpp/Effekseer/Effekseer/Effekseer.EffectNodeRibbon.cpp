@@ -141,12 +141,18 @@ void EffectNodeRibbon::BeginRendering(int32_t count, Manager* manager)
 		m_nodeParameter.ZTest = RendererCommon.ZTest;
 		m_nodeParameter.ZWrite = RendererCommon.ZWrite;
 		m_nodeParameter.ViewpointDependent = ViewpointDependent != 0;
-		m_nodeParameter.ColorTextureIndex = RibbonTexture;
+
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
+		{
+			m_nodeParameter.TextureIndex[i] = RendererCommon.TextureIndex[i];
+		}
+
 		m_nodeParameter.EffectPointer = GetEffect();
 
 		m_nodeParameter.Distortion = RendererCommon.Distortion;
 		m_nodeParameter.DistortionIntensity = RendererCommon.DistortionIntensity;
 
+		m_nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
 
 		renderer->BeginRendering( m_nodeParameter, count, m_userData );
 	}

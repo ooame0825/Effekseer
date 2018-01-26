@@ -65,7 +65,7 @@ public:
 		if (CullingType != state.CullingType) return true;
 		if (TextureFilterType != state.TextureFilterType) return true;
 		if (TextureWrapType != state.TextureWrapType) return true;
-		for (int i = 0; i < 5; i++) 
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++) 
 		{
 			if (TexturePtr[i] != state.TexturePtr[i]) return true;
 		}

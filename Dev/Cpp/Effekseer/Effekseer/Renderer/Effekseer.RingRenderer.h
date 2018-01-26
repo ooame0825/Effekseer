@@ -22,13 +22,16 @@ namespace Effekseer
 
 class RingRenderer
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 public:
 
 	struct NodeParameter
 	{
 		Effect*				EffectPointer;
-		int32_t				ColorTextureIndex;
-		AlphaBlendType			AlphaBlend;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
+		AlphaBlendType		AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType	TextureWrap;
 		bool				ZTest;
@@ -43,6 +46,8 @@ public:
 		float				DepthOffset;
 		bool				IsDepthOffsetScaledWithCamera;
 		bool				IsDepthOffsetScaledWithParticleScale;
+
+		int					MultiTexBlendType;
 	};
 
 	struct InstanceParameter

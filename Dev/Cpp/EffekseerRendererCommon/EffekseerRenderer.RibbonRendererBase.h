@@ -31,6 +31,9 @@ template<typename RENDERER, typename VERTEX_NORMAL, typename VERTEX_DISTORTION>
 class RibbonRendererBase
 	: public ::Effekseer::RibbonRenderer
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 protected:
 	RENDERER*						m_renderer;
 	int32_t							m_ribbonCount;
@@ -72,24 +75,28 @@ protected:
 		state.Distortion = param.Distortion;
 		state.DistortionIntensity = param.DistortionIntensity;
 
-		if (param.ColorTextureIndex >= 0)
+		for (int i = 0; i < MAX_TEXTURE_SUM; i++)
 		{
-			if (state.Distortion)
+			int texIndex = param.TextureIndex[i];
+
+			if (texIndex >= 0)
 			{
-				state.TexturePtr[0] = param.EffectPointer->GetDistortionImage(param.ColorTextureIndex);
+				if (state.Distortion)
+				{
+					state.TexturePtr[i] = param.EffectPointer->GetDistortionImage(texIndex);
+				}
+				else
+				{
+					state.TexturePtr[i] = param.EffectPointer->GetColorImage(texIndex);
+				}
 			}
 			else
 			{
-				state.TexturePtr[0] = param.EffectPointer->GetColorImage(param.ColorTextureIndex);
+				state.TexturePtr[i] = nullptr;
 			}
 		}
-		else
-		{
-			for (auto it : state.TexturePtr)
-			{
-				it = nullptr;
-			}
-		}
+
+		state.MultiTexBlendType = param.MultiTexBlendType;
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 

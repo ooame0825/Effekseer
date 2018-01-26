@@ -40,6 +40,9 @@ struct TrackSizeParameter
 class EffectNodeTrack
 	: public EffectNodeImplemented
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 public:
 
 	struct InstanceGroupValues

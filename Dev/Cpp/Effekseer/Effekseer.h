@@ -2137,12 +2137,15 @@ namespace Effekseer
 
 class RibbonRenderer
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 public:
 
 	struct NodeParameter
 	{
 		Effect*				EffectPointer;
-		int32_t				ColorTextureIndex;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
 		AlphaBlendType			AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType	TextureWrap;
@@ -2152,6 +2155,8 @@ public:
 
 		bool				Distortion;
 		float				DistortionIntensity;
+
+		int					MultiTexBlendType;
 	};
 
 	struct InstanceParameter
@@ -2208,13 +2213,15 @@ namespace Effekseer
 
 class RingRenderer
 {
+private :
+	static const int MAX_TEXTURE_SUM = 4;
 public:
 
 	struct NodeParameter
 	{
 		Effect*				EffectPointer;
-		int32_t				ColorTextureIndex;
-		AlphaBlendType			AlphaBlend;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
+		AlphaBlendType		AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType	TextureWrap;
 		bool				ZTest;
@@ -2229,6 +2236,8 @@ public:
 		float				DepthOffset;
 		bool				IsDepthOffsetScaledWithCamera;
 		bool				IsDepthOffsetScaledWithParticleScale;
+
+		int					MultiTexBlendType;
 	};
 
 	struct InstanceParameter
@@ -2359,12 +2368,15 @@ namespace Effekseer
 
 class TrackRenderer
 {
+private:
+	static const int MAX_TEXTURE_SUM = 4;
+
 public:
 
 	struct NodeParameter
 	{
 		Effect*				EffectPointer;
-		int32_t				ColorTextureIndex;
+		int32_t				TextureIndex[MAX_TEXTURE_SUM];
 		AlphaBlendType			AlphaBlend;
 		TextureFilterType	TextureFilter;
 		TextureWrapType		TextureWrap;
@@ -2373,6 +2385,8 @@ public:
 
 		bool				Distortion;
 		float				DistortionIntensity;
+
+		int					MultiTexBlendType;
 	};
 
 	struct InstanceGroupParameter
