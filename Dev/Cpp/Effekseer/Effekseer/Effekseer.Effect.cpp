@@ -294,11 +294,11 @@ bool EffectImplemented::Load( void* pData, int size, float mag, const EFK_CHAR* 
 
 	int len = std::to_string(version).length();
 
-	if (len == 2)
+	if (len <= 2)
 	{
 		m_version = version;
 	}
-	else if (len == 4)
+	else if (len >= 3)
 	{
 		m_version = version / 100;
 		m_original_version = version % 100;
