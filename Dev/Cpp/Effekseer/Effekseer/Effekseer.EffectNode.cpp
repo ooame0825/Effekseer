@@ -586,7 +586,10 @@ EffectNode* EffectNodeImplemented::GetChild(int index) const
 EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 {
 	EffectBasicRenderParameter param;
-	param.ColorTextureIndex = RendererCommon.TextureIndex[0];
+	for (int i = 0; i < EffectBasicRenderParameter::MAX_TEXTURE_SUM; i++)
+	{
+		param.TextureIndex[i] = RendererCommon.TextureIndex[i];
+	}
 	param.AlphaBlend = RendererCommon.AlphaBlend;
 	param.Distortion = RendererCommon.Distortion;
 	param.DistortionIntensity = RendererCommon.DistortionIntensity;
@@ -599,7 +602,10 @@ EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 
 void EffectNodeImplemented::SetBasicRenderParameter(EffectBasicRenderParameter param)
 {
-	RendererCommon.TextureIndex[0] = param.ColorTextureIndex;
+	for (int i = 0; i < EffectBasicRenderParameter::MAX_TEXTURE_SUM; i++)
+	{
+		RendererCommon.TextureIndex[i] = param.TextureIndex[i];
+	}
 	RendererCommon.AlphaBlend = param.AlphaBlend;
 	RendererCommon.Distortion = param.Distortion;
 	RendererCommon.DistortionIntensity = param.DistortionIntensity;
@@ -613,11 +619,13 @@ EffectModelParameter EffectNodeImplemented::GetEffectModelParameter()
 {
 	EffectModelParameter param;
 	param.Lighting = false;
+	param.TwoSided = true;
 
 	if (GetType() == EFFECT_NODE_TYPE_MODEL)
 	{
 		auto t = (EffectNodeModel*)this;
 		param.Lighting = t->Lighting;
+		param.TwoSided = ((t->Culling == CullingType::Double) ? true : false);
 	}
 
 	return param;
