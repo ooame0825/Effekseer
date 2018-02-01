@@ -336,6 +336,7 @@ public:
 			m_renderer->SetVertexBuffer(m_renderer->GetVertexBuffer(), sizeof(VERTEX));
 			m_renderer->SetIndexBuffer(m_renderer->GetIndexBuffer());
 			m_renderer->SetLayout(shader_);
+			m_renderer->SetMultiTexBlendType(m_state.MultiTexBlendType);
 			m_renderer->DrawSprites(spriteCount, offsetSize / sizeof(VERTEX));
 		}
 

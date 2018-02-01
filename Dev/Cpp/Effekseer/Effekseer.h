@@ -1441,7 +1441,9 @@ public:
 */
 struct EffectBasicRenderParameter
 {
-	int32_t				ColorTextureIndex;
+	static const int MAX_TEXTURE_SUM = 4;
+
+	int32_t				TextureIndex[MAX_TEXTURE_SUM];
 	AlphaBlendType		AlphaBlend;
 	TextureFilterType	FilterType;
 	TextureWrapType		WrapType;
@@ -1449,6 +1451,7 @@ struct EffectBasicRenderParameter
 	bool				ZTest;
 	bool				Distortion;
 	float				DistortionIntensity;
+	int					MultiTexBlendType;
 };
 
 /**
@@ -1463,6 +1466,7 @@ struct EffectBasicRenderParameter
 struct EffectModelParameter
 {
 	bool				Lighting;
+	bool				TwoSided;
 };
 
 /**

@@ -333,6 +333,8 @@ private:
 
 	bool	m_restorationOfStates;
 
+	int						m_MultiTexBlendType = 0;
+
 	EffekseerRenderer::DistortingCallback* m_distortingCallback;
 
 public:
@@ -513,6 +515,7 @@ public:
 	void EndShader(Shader* shader);
 
 	void SetTextures(Shader* shader, Effekseer::TextureData** textures, int32_t count);
+	void SetMultiTexBlendType(int value) { m_MultiTexBlendType = value; }
 
 	void ChangeDevice( LPDIRECT3DDEVICE9 device );
 
