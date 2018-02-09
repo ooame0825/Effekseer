@@ -1151,6 +1151,43 @@ void ManagerImplemented::SetSpeed( Handle handle, float speed )
 	}
 }
 
+void ManagerImplemented::SpawnNode(Handle handle, float x, float y, float z)
+{
+	if (m_DrawSets.count(handle) > 0)
+	{
+		// Forcibly generate particles
+		auto root_instance = m_DrawSets[handle].InstanceContainerPointer->GetFirstGroup()->GetFirst();
+
+		InstanceGroup* group = root_instance->m_headGroups;
+
+		for (int i = 0; i < root_instance->m_pEffectNode->GetChildrenCount(); i++, group = group->NextUsedByInstance)
+		{
+			auto pNode = (EffectNodeImplemented*)root_instance->m_pEffectNode->GetChild(i);
+			auto pContainer = root_instance->m_pContainer->GetChild(i);
+			assert(group != NULL);
+
+			Instance* pNewInstance = group->CreateInstance();
+			if (pNewInstance != NULL)
+			{
+				pNewInstance->Initialize(root_instance, root_instance->m_generatedChildrenCount[i]);
+				pNewInstance->m_GenerationLocation.Translation
+				(
+					-pNewInstance->m_GlobalPosition.X + x,
+					-pNewInstance->m_GlobalPosition.Y + y,
+					-pNewInstance->m_GlobalPosition.Z + z
+				);
+			}
+			else
+			{
+				break;
+			}
+
+			root_instance->m_generatedChildrenCount[i]++;
+			root_instance->m_nextGenerationTime[i] += Max(0.0f, pNode->CommonValues.GenerationTime.getValue(*m_DrawSets[handle].InstanceContainerPointer->m_pGlobal));
+		}
+	}
+}
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

@@ -501,6 +501,8 @@ public:
 	float GetSpeed(Handle handle) const override;
 
 	void SetSpeed( Handle handle, float speed );
+
+	void SpawnNode(Handle handle, float x, float y, float z) override;
 	
 	void SetAutoDrawing( Handle handle, bool autoDraw );
 	

@@ -419,6 +419,15 @@ public:
 	virtual void SetSpeed( Handle handle, float speed ) = 0;
 
 	/**
+		@brief	ルート直下のノードを作成する
+		@param	handle[in]	インスタンスのハンドル
+		@param	x	[in]	X座標 (World)
+		@param	y	[in]	Y座標 (World)
+		@param	z	[in]	Z座標 (World)
+	*/
+	virtual void SpawnNode(Handle handle, float x, float y, float z) = 0;
+
+	/**
 		@brief	エフェクトがDrawで描画されるか設定する。
 				autoDrawがfalseの場合、DrawHandleで描画する必要がある。
 		@param	autoDraw	[in]	自動描画フラグ
