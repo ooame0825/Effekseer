@@ -600,6 +600,10 @@ public:
 			memcpy(&TextureIndex[1], pos, sizeof(int));
 			pos += sizeof(int);
 		}
+		else
+		{
+			TextureIndex[1] = -1;
+		}
 
 		memcpy( &AlphaBlend, pos, sizeof(int) );
 		pos += sizeof(int);
@@ -744,6 +748,12 @@ public:
 			// ブレンド取得
 			memcpy(&MultiTexBlendType, pos, sizeof(int));
 			pos += sizeof(int);
+		}
+		else
+		{
+			TextureIndex[2] = -1;
+			TextureIndex[3] = -1;
+			MultiTexBlendType = 0;
 		}
 	}
 
