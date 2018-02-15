@@ -129,8 +129,10 @@ namespace Effekseer
 	{
 		for (int i = 1; i < MAX_TEXTURE_SUM; i++)
 		{
-			SpriteTexture[i] = 0;
+			SpriteTexture[i] = -1;
 		}
+
+		MultiTexBlendType = 0;
 	}
 
 	// 右手系左手系変換
