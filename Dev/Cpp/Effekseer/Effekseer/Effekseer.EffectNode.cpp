@@ -586,7 +586,8 @@ EffectNode* EffectNodeImplemented::GetChild(int index) const
 EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 {
 	EffectBasicRenderParameter param;
-	for (int i = 0; i < EffectBasicRenderParameter::MAX_TEXTURE_SUM; i++)
+	const int MAX_TEXTURE_SUM = 4;
+	for (int i = 0; i < MAX_TEXTURE_SUM; i++)
 	{
 		param.TextureIndex[i] = RendererCommon.TextureIndex[i];
 	}
@@ -602,7 +603,8 @@ EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 
 void EffectNodeImplemented::SetBasicRenderParameter(EffectBasicRenderParameter param)
 {
-	for (int i = 0; i < EffectBasicRenderParameter::MAX_TEXTURE_SUM; i++)
+	const int MAX_TEXTURE_SUM = 4;
+	for (int i = 0; i < MAX_TEXTURE_SUM; i++)
 	{
 		RendererCommon.TextureIndex[i] = param.TextureIndex[i];
 	}

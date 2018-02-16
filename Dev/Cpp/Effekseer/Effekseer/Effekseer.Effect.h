@@ -223,6 +223,7 @@ struct EffectBasicRenderParameter
 	bool				ZTest;
 	bool				Distortion;
 	float				DistortionIntensity;
+	int					MultiTexBlendType;
 };
 
 /**
