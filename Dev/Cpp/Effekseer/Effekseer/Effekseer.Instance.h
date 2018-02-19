@@ -219,6 +219,15 @@ public:
 	// Scroll speed for UV
 	Vector2D	uvScrollSpeed;
 
+	// The time offset for UV
+	int32_t		blendUVTimeOffset;
+
+	// Scroll, FCurve area for UV
+	RectF		blendUVAreaOffset;
+
+	// Scroll speed for UV
+	Vector2D	blendUVScrollSpeed;
+
 	// The number of generated chiledren. (fixed size)
 	int32_t		m_fixedGeneratedChildrenCount[ChildrenMax];
 
@@ -299,6 +308,11 @@ public:
 		@brief	UVの位置取得
 	*/
 	RectF GetUV() const;
+	
+	/**
+	@brief	UVの位置取得
+	*/
+	RectF GetBlendUV() const;
 
 private:
 	/**

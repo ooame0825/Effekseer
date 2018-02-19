@@ -290,6 +290,7 @@ void EffectNodeSprite::Rendering(const Instance& instance, Manager* manager)
 		}
 
 		instanceParameter.UV = instance.GetUV();
+		instanceParameter.BlendUV = instance.GetBlendUV();
 		renderer->Rendering( nodeParameter, instanceParameter, m_userData );
 	}
 }

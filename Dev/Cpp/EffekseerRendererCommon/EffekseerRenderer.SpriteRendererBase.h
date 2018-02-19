@@ -137,6 +137,18 @@ protected:
 		verteies[3].UV[0] = instanceParameter.UV.X + instanceParameter.UV.Width;
 		verteies[3].UV[1] = instanceParameter.UV.Y;
 
+		verteies[0].UV[2] = instanceParameter.BlendUV.X;
+		verteies[0].UV[3] = instanceParameter.BlendUV.Y + instanceParameter.BlendUV.Height;
+
+		verteies[1].UV[2] = instanceParameter.BlendUV.X + instanceParameter.BlendUV.Width;
+		verteies[1].UV[3] = instanceParameter.BlendUV.Y + instanceParameter.BlendUV.Height;
+
+		verteies[2].UV[2] = instanceParameter.BlendUV.X;
+		verteies[2].UV[3] = instanceParameter.BlendUV.Y;
+
+		verteies[3].UV[2] = instanceParameter.BlendUV.X + instanceParameter.BlendUV.Width;
+		verteies[3].UV[3] = instanceParameter.BlendUV.Y;
+
 		// 歪み処理
 		if (sizeof(VERTEX) == sizeof(VERTEX_DISTORTION))
 		{

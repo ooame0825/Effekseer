@@ -31,6 +31,7 @@ Instance::Instance(Manager* pManager, EffectNode* pEffectNode, InstanceContainer
 	, m_LivedTime(0)
 	, m_LivingTime(0)
 	, uvTimeOffset(0)
+	, blendUVTimeOffset(0)
 	, m_GlobalMatrix43Calculated(false)
 	, m_ParentMatrix43Calculated(false)
 	, m_flexibleGeneratedChildrenCount(nullptr)
@@ -591,12 +592,19 @@ void Instance::Initialize( Instance* parent, int32_t instanceNumber )
 	}
 
 	// UV
+	// Animation
 	if (m_pEffectNode->RendererCommon.UVType == ParameterRendererCommon::UV_ANIMATION)
 	{
 		uvTimeOffset = m_pEffectNode->RendererCommon.UV.Animation.StartFrame.getValue(*instanceGlobal);
 		uvTimeOffset *= m_pEffectNode->RendererCommon.UV.Animation.FrameLength;
 	}
+	if (m_pEffectNode->RendererCommon.BlendUVType == ParameterRendererCommon::UV_ANIMATION)
+	{
+		blendUVTimeOffset = m_pEffectNode->RendererCommon.BlendUV.Animation.StartFrame.getValue(*instanceGlobal);
+		blendUVTimeOffset *= m_pEffectNode->RendererCommon.BlendUV.Animation.FrameLength;
+	}
 	
+	// Scroll
 	if (m_pEffectNode->RendererCommon.UVType == ParameterRendererCommon::UV_SCROLL)
 	{
 		auto xy = m_pEffectNode->RendererCommon.UV.Scroll.Position.getValue(*instanceGlobal);
@@ -609,13 +617,33 @@ void Instance::Initialize( Instance* parent, int32_t instanceNumber )
 
 		m_pEffectNode->RendererCommon.UV.Scroll.Speed.getValue(*instanceGlobal).setValueToArg(uvScrollSpeed);
 	}
+	if (m_pEffectNode->RendererCommon.BlendUVType == ParameterRendererCommon::UV_SCROLL)
+	{
+		auto xy = m_pEffectNode->RendererCommon.BlendUV.Scroll.Position.getValue(*instanceGlobal);
+		auto zw = m_pEffectNode->RendererCommon.BlendUV.Scroll.Size.getValue(*instanceGlobal);
 
+		blendUVAreaOffset.X = xy.x;
+		blendUVAreaOffset.Y = xy.y;
+		blendUVAreaOffset.Width = zw.x;
+		blendUVAreaOffset.Height = zw.y;
+
+		m_pEffectNode->RendererCommon.BlendUV.Scroll.Speed.getValue(*instanceGlobal).setValueToArg(blendUVScrollSpeed);
+	}
+
+	// FCurve
 	if (m_pEffectNode->RendererCommon.UVType == ParameterRendererCommon::UV_FCURVE)
 	{
 		uvAreaOffset.X = m_pEffectNode->RendererCommon.UV.FCurve.Position->X.GetOffset(*instanceGlobal);
 		uvAreaOffset.Y = m_pEffectNode->RendererCommon.UV.FCurve.Position->Y.GetOffset(*instanceGlobal);
 		uvAreaOffset.Width = m_pEffectNode->RendererCommon.UV.FCurve.Size->X.GetOffset(*instanceGlobal);
 		uvAreaOffset.Height = m_pEffectNode->RendererCommon.UV.FCurve.Size->Y.GetOffset(*instanceGlobal);
+	}
+	if (m_pEffectNode->RendererCommon.UVType == ParameterRendererCommon::UV_FCURVE)
+	{
+		blendUVAreaOffset.X = m_pEffectNode->RendererCommon.BlendUV.FCurve.Position->X.GetOffset(*instanceGlobal);
+		blendUVAreaOffset.Y = m_pEffectNode->RendererCommon.BlendUV.FCurve.Position->Y.GetOffset(*instanceGlobal);
+		blendUVAreaOffset.Width = m_pEffectNode->RendererCommon.BlendUV.FCurve.Size->X.GetOffset(*instanceGlobal);
+		blendUVAreaOffset.Height = m_pEffectNode->RendererCommon.BlendUV.FCurve.Size->Y.GetOffset(*instanceGlobal);
 	}
 
 	m_pEffectNode->InitializeRenderedInstance(*this, m_pManager);
@@ -1366,6 +1394,98 @@ RectF Instance::GetUV() const
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
+RectF Instance::GetBlendUV() const
+{
+	auto& CommonValue = m_pEffectNode->RendererCommon;
+	auto& BlendUV = CommonValue.BlendUV;
+	int BlendUVType = CommonValue.BlendUVType;
+
+	switch (BlendUVType)
+	{
+	default:
+	case ParameterRendererCommon::UV_DEFAULT:
+	{
+		return RectF(0.0f, 0.0f, 1.0f, 1.0f);
+	}
+		break;
+
+	case ParameterRendererCommon::UV_FIXED:
+	{
+		return RectF(
+			BlendUV.Fixed.Position.x,
+			BlendUV.Fixed.Position.y,
+			BlendUV.Fixed.Position.w,
+			BlendUV.Fixed.Position.h);
+	}
+		break;
+
+	case ParameterRendererCommon::UV_ANIMATION:
+	{
+		auto time = m_LivingTime + blendUVTimeOffset;
+
+		int32_t frameNum = (int32_t)(time / BlendUV.Animation.FrameLength);
+		int32_t frameCount = BlendUV.Animation.FrameCountX * BlendUV.Animation.FrameCountY;
+
+		if (BlendUV.Animation.LoopType == BlendUV.Animation.LOOPTYPE_ONCE)
+		{
+			if (frameNum >= frameCount)
+			{
+				frameNum = frameCount - 1;
+			}
+		}
+		else if (BlendUV.Animation.LoopType == BlendUV.Animation.LOOPTYPE_LOOP)
+		{
+			frameNum %= frameCount;
+		}
+		else if (BlendUV.Animation.LoopType == BlendUV.Animation.LOOPTYPE_REVERSELOOP)
+		{
+			bool rev = (frameNum / frameCount) % 2 == 1;
+			frameNum %= frameCount;
+			if (rev)
+			{
+				frameNum = frameCount - 1 - frameNum;
+			}
+		}
+
+		int32_t frameX = frameNum % BlendUV.Animation.FrameCountX;
+		int32_t frameY = frameNum / BlendUV.Animation.FrameCountX;
+
+		return RectF(
+			BlendUV.Animation.Position.x + BlendUV.Animation.Position.w * frameX,
+			BlendUV.Animation.Position.y + BlendUV.Animation.Position.h * frameY,
+			BlendUV.Animation.Position.w,
+			BlendUV.Animation.Position.h);
+	}
+		break;
+
+	case ParameterRendererCommon::UV_SCROLL:
+	{
+		auto time = m_LivingTime + blendUVTimeOffset;
+
+		return RectF(
+			blendUVAreaOffset.X + blendUVScrollSpeed.X * time,
+			blendUVAreaOffset.Y + blendUVScrollSpeed.Y * time,
+			blendUVAreaOffset.Width,
+			blendUVAreaOffset.Height);
+	}
+		break;
+
+	case ParameterRendererCommon::UV_FCURVE:
+	{
+		auto time = m_LivingTime + blendUVTimeOffset;
+
+		return RectF(
+			blendUVAreaOffset.X + BlendUV.FCurve.Position->X.GetValue(time),
+			blendUVAreaOffset.Y + BlendUV.FCurve.Position->Y.GetValue(time),
+			blendUVAreaOffset.Width + BlendUV.FCurve.Size->X.GetValue(time),
+			blendUVAreaOffset.Height + BlendUV.FCurve.Size->Y.GetValue(time));
+	}
+		break;
+	}
+
+	return RectF(0.0f, 0.0f, 1.0f, 1.0f);
+}
+
 }
 
 //----------------------------------------------------------------------------------

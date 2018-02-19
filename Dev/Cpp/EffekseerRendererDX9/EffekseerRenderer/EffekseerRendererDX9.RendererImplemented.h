@@ -28,7 +28,7 @@ struct Vertex
 {
 	::Effekseer::Vector3D	Pos;
 	D3DCOLOR	Col;
-	float		UV[2];
+	float		UV[4];
 
 	void SetColor( const ::Effekseer::Color& color )
 	{

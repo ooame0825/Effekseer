@@ -53,7 +53,7 @@
     mul oT2, r0, r1.x
     mov oPos, r0
     mov oT0, v1
-    mov oT1.xy, v2
+    mov oT1, v2
 
 // approximately 29 instruction slots used
 #endif
@@ -176,6 +176,6 @@ const BYTE g_vs20_VS[] =
     228, 128,   1,   0,   0,   2, 
       0,   0,  15, 224,   1,   0, 
     228, 144,   1,   0,   0,   2, 
-      1,   0,   3, 224,   2,   0, 
+      1,   0,  15, 224,   2,   0, 
     228, 144, 255, 255,   0,   0
 };

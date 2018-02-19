@@ -705,6 +705,7 @@ public:
 			}
 			else
 			{
+				int s = sizeof(BlendUV.Scroll);
 				memcpy(&UV.Scroll, pos, sizeof(UV.Scroll));
 				pos += sizeof(UV.Scroll);
 			}
@@ -814,6 +815,7 @@ public:
 					}
 					else
 					{
+						int s = sizeof(BlendUV.Scroll);
 						memcpy(&BlendUV.Scroll, pos, sizeof(BlendUV.Scroll));
 						pos += sizeof(BlendUV.Scroll);
 					}

@@ -58,6 +58,7 @@ public:
 		Vector2D	Positions[4];
 
 		RectF	UV;
+		RectF   BlendUV;
 	};
 
 public:

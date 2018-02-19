@@ -6,14 +6,14 @@ struct VS_Input
 {
 	float3 Pos		: POSITION0;
 	float4 Color		: NORMAL0;
-	float2 UV		: TEXCOORD0;
+	float4 UV		: TEXCOORD0;
 };
 
 struct VS_Output
 {
 	float4 Position		: POSITION0;
 	float4 Color		: TEXCOORD0;
-	float2 UV		: TEXCOORD1;
+	float4 UV		: TEXCOORD1;
 
 	float4 Pos		: TEXCOORD2;
 	float4 PosU		: TEXCOORD3;
