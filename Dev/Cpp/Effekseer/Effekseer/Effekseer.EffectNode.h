@@ -485,6 +485,10 @@ public:
 
 	int32_t				MultiTexBlendType;
 
+	TextureFilterType	BlendFilterType;
+
+	TextureWrapType		BlendWrapType;
+
 	enum
 	{
 		FADEIN_ON = 1,
@@ -522,7 +526,7 @@ public:
 		UV_FCURVE = 4,
 
 		UV_DWORD = 0x7fffffff,
-	} UVType;
+	} UVType, BlendUVType;
 
 
 	/**
@@ -580,7 +584,7 @@ public:
 			FCurveVector2D* Size;
 		} FCurve;
 
-	} UV;
+	} UV, BlendUV;
 
 	void reset()
 	{
@@ -748,12 +752,90 @@ public:
 			// ブレンド取得
 			memcpy(&MultiTexBlendType, pos, sizeof(int));
 			pos += sizeof(int);
-		}
+
+			if (original_version >= 2)
+			{
+				// フィルター取得
+				memcpy(&BlendFilterType, pos, sizeof(int));
+				pos += sizeof(int);
+
+				// テクスチャアドレスタイプ取得
+				memcpy(&BlendWrapType, pos, sizeof(int));
+				pos += sizeof(int);
+
+				// UV取得
+				memcpy(&BlendUVType, pos, sizeof(int));
+				pos += sizeof(int);
+
+				if (BlendUVType == UV_DEFAULT)
+				{
+				}
+				else if (BlendUVType == UV_FIXED)
+				{
+					memcpy(&BlendUV.Fixed, pos, sizeof(BlendUV.Fixed));
+					pos += sizeof(BlendUV.Fixed);
+				}
+				else if (BlendUVType == UV_ANIMATION)
+				{
+					if (version < 10)
+					{
+						// without start frame
+						memcpy(&BlendUV.Animation, pos, sizeof(BlendUV.Animation) - sizeof(BlendUV.Animation.StartFrame));
+						pos += sizeof(BlendUV.Animation) - sizeof(BlendUV.Animation.StartFrame);
+						BlendUV.Animation.StartFrame.max = 0;
+						BlendUV.Animation.StartFrame.min = 0;
+					}
+					else
+					{
+						memcpy(&BlendUV.Animation, pos, sizeof(BlendUV.Animation));
+						pos += sizeof(BlendUV.Animation);
+					}
+				}
+				else if (BlendUVType == UV_SCROLL)
+				{
+					if (version < 10)
+					{
+						// compatibility
+						UVScroll_09 values;
+						memcpy(&values, pos, sizeof(values));
+						pos += sizeof(values);
+						BlendUV.Scroll.Position.max.x = values.Position.x;
+						BlendUV.Scroll.Position.max.y = values.Position.y;
+						BlendUV.Scroll.Position.min = BlendUV.Scroll.Position.max;
+
+						BlendUV.Scroll.Size.max.x = values.Position.w;
+						BlendUV.Scroll.Size.max.y = values.Position.h;
+						BlendUV.Scroll.Size.min = BlendUV.Scroll.Size.max;
+
+						BlendUV.Scroll.Speed.max.x = values.Speed.x;
+						BlendUV.Scroll.Speed.max.y = values.Speed.y;
+						BlendUV.Scroll.Speed.min = BlendUV.Scroll.Speed.max;
+
+					}
+					else
+					{
+						memcpy(&BlendUV.Scroll, pos, sizeof(BlendUV.Scroll));
+						pos += sizeof(BlendUV.Scroll);
+					}
+				}
+				else if (BlendUVType == UV_FCURVE)
+				{
+					BlendUV.FCurve.Position = new FCurveVector2D();
+					BlendUV.FCurve.Size = new FCurveVector2D();
+					pos += BlendUV.FCurve.Position->Load(pos, version);
+					pos += BlendUV.FCurve.Size->Load(pos, version);
+				}
+
+			} // end if
+		} // end if
 		else
 		{
 			TextureIndex[2] = -1;
 			TextureIndex[3] = -1;
 			MultiTexBlendType = 0;
+			BlendFilterType = TextureFilterType::Linear;
+			BlendWrapType = TextureWrapType::Repeat;
+			BlendUVType = UV_DEFAULT;
 		}
 	}
 
@@ -763,6 +845,12 @@ public:
 		{
 			ES_SAFE_DELETE(UV.FCurve.Position);
 			ES_SAFE_DELETE(UV.FCurve.Size);
+		}
+
+		if (BlendUVType == UV_FCURVE)
+		{
+			ES_SAFE_DELETE(BlendUV.FCurve.Position);
+			ES_SAFE_DELETE(BlendUV.FCurve.Size);
 		}
 	}
 };
