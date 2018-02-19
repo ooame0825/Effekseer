@@ -36,42 +36,42 @@ namespace Effekseer.Data
             private set;
         }
 
-        //[Name(language = Language.Japanese, value = "フィルタ")]
-        //[Name(language = Language.English, value = "Filter")]
-        //public Value.Enum<FilterType> Filter { get; private set; }
+        [Name(language = Language.Japanese, value = "フィルタ")]
+        [Name(language = Language.English, value = "Filter")]
+        public Value.Enum<FilterType> Filter { get; private set; }
 
-        //[Name(language = Language.Japanese, value = "外側")]
-        //[Name(language = Language.English, value = "Wrap")]
-        //public Value.Enum<WrapType> Wrap { get; private set; }
+        [Name(language = Language.Japanese, value = "外側")]
+        [Name(language = Language.English, value = "Wrap")]
+        public Value.Enum<WrapType> Wrap { get; private set; }
 
-        //[Selector(ID = 2)]
-        //[Name(language = Language.Japanese, value = "UV")]
-        //[Name(language = Language.English, value = "UV")]
-        //public Value.Enum<UVType> UV
-        //{
-        //    get;
-        //    private set;
-        //}
+        [Selector(ID = 2)]
+        [Name(language = Language.Japanese, value = "UV")]
+        [Name(language = Language.English, value = "UV")]
+        public Value.Enum<UVType> UV
+        {
+            get;
+            private set;
+        }
 
-        //[Selected(ID = 2, Value = 0)]
-        //[IO(Export = true)]
-        //public UVDefaultParamater UVDefault { get; private set; }
+        [Selected(ID = 2, Value = 0)]
+        [IO(Export = true)]
+        public UVDefaultParamater UVDefault { get; private set; }
 
-        //[Selected(ID = 2, Value = 1)]
-        //[IO(Export = true)]
-        //public UVFixedParamater UVFixed { get; private set; }
+        [Selected(ID = 2, Value = 1)]
+        [IO(Export = true)]
+        public UVFixedParamater UVFixed { get; private set; }
 
-        //[Selected(ID = 2, Value = 2)]
-        //[IO(Export = true)]
-        //public UVAnimationParamater UVAnimation { get; private set; }
+        [Selected(ID = 2, Value = 2)]
+        [IO(Export = true)]
+        public UVAnimationParamater UVAnimation { get; private set; }
 
-        //[Selected(ID = 2, Value = 3)]
-        //[IO(Export = true)]
-        //public UVScrollParamater UVScroll { get; private set; }
+        [Selected(ID = 2, Value = 3)]
+        [IO(Export = true)]
+        public UVScrollParamater UVScroll { get; private set; }
 
-        //[Selected(ID = 2, Value = 4)]
-        //[IO(Export = true)]
-        //public UVFCurveParamater UVFCurve { get; private set; }
+        [Selected(ID = 2, Value = 4)]
+        [IO(Export = true)]
+        public UVFCurveParamater UVFCurve { get; private set; }
 
         internal RendererCommonValues2()
         {
@@ -79,16 +79,16 @@ namespace Effekseer.Data
             AlphaTexture2 = new Value.PathForImage(Properties.Resources.ImageFilter, true, "");
 
             BlendInType = new Value.Enum<BlendType>(BlendType.AlphaBlend);
-            //Filter = new Value.Enum<FilterType>(FilterType.Linear);
-            //Wrap = new Value.Enum<WrapType>(WrapType.Repeat);
+            Filter = new Value.Enum<FilterType>(FilterType.Linear);
+            Wrap = new Value.Enum<WrapType>(WrapType.Repeat);
 
-            //UV = new Value.Enum<UVType>();
+            UV = new Value.Enum<UVType>();
 
-            //UVDefault = new UVDefaultParamater();
-            //UVFixed = new UVFixedParamater();
-            //UVAnimation = new UVAnimationParamater();
-            //UVScroll = new UVScrollParamater();
-            //UVFCurve = new UVFCurveParamater();
+            UVDefault = new UVDefaultParamater();
+            UVFixed = new UVFixedParamater();
+            UVAnimation = new UVAnimationParamater();
+            UVScroll = new UVScrollParamater();
+            UVFCurve = new UVFCurveParamater();
         }
 
         public class UVDefaultParamater
