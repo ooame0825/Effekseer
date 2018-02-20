@@ -35,7 +35,10 @@ public:
 	::Effekseer::TextureFilterType		TextureFilterType;
 	::Effekseer::TextureWrapType		TextureWrapType;
 	::Effekseer::TextureData*			TexturePtr[MAX_TEXTURE_SUM];
+
 	int32_t								MultiTexBlendType;
+	::Effekseer::TextureFilterType		BlendTextureFilterType;
+	::Effekseer::TextureWrapType		BlendTextureWrapType;
 
 	StandardRendererState()
 	{
@@ -46,8 +49,8 @@ public:
 
 		AlphaBlend = ::Effekseer::AlphaBlendType::Blend;
 		CullingType = ::Effekseer::CullingType::Front;
-		TextureFilterType = ::Effekseer::TextureFilterType::Nearest;
-		TextureWrapType = ::Effekseer::TextureWrapType::Repeat;
+		TextureFilterType = BlendTextureFilterType = ::Effekseer::TextureFilterType::Nearest;
+		TextureWrapType = BlendTextureWrapType = ::Effekseer::TextureWrapType::Repeat;
 		for (auto it : TexturePtr)
 		{
 			it = nullptr;
@@ -70,6 +73,8 @@ public:
 			if (TexturePtr[i] != state.TexturePtr[i]) return true;
 		}
 		if (state.MultiTexBlendType != MultiTexBlendType) return true;
+		if (BlendTextureFilterType != state.BlendTextureFilterType) return true;
+		if (BlendTextureWrapType != state.BlendTextureWrapType) return true;
 		return false;
 	}
 };
@@ -319,7 +324,14 @@ public:
 		shader_->SetConstantBuffer();
 
 		state.TextureFilterTypes[0] = m_state.TextureFilterType;
-		state.TextureWrapTypes[0] = m_state.TextureWrapType;
+		state.TextureWrapTypes[0]	= m_state.TextureWrapType;
+		state.TextureFilterTypes[1] = m_state.TextureFilterType;
+		state.TextureWrapTypes[1]	= m_state.TextureWrapType;
+
+		state.TextureFilterTypes[2] = m_state.BlendTextureFilterType;
+		state.TextureWrapTypes[2]	= m_state.BlendTextureWrapType;
+		state.TextureFilterTypes[3] = m_state.BlendTextureFilterType;
+		state.TextureWrapTypes[3]	= m_state.BlendTextureWrapType;
 
 		m_renderer->GetRenderState()->Update(distortion);
 

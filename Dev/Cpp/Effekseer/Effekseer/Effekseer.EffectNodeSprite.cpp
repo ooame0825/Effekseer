@@ -135,6 +135,12 @@ namespace Effekseer
 		MultiTexBlendType = 0;
 	}
 
+	if (m_effect->GetOriginalVersion() >= 2)
+	{
+		BlendTextureFilterType = RendererCommon.BlendFilterType;
+		BlendTextureWrapType = RendererCommon.BlendWrapType;
+	}
+
 	// 右手系左手系変換
 	if (setting->GetCoordinateSystem() == CoordinateSystem::LH)
 	{
@@ -176,6 +182,8 @@ void EffectNodeSprite::BeginRendering(int32_t count, Manager* manager)
 			nodeParameter.TextureIndex[i] = SpriteTexture[i];
 		}
 		nodeParameter.MultiTexBlendType = MultiTexBlendType;
+		nodeParameter.BlendTextureFilterType = BlendTextureFilterType;
+		nodeParameter.BlendTextureWrapType = BlendTextureWrapType;
 		nodeParameter.EffectPointer = GetEffect();
 		nodeParameter.IsRightHand = manager->GetCoordinateSystem() ==
 			CoordinateSystem::RH;

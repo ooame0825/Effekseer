@@ -135,6 +135,8 @@ public:
 
 	int SpriteTexture[MAX_TEXTURE_SUM];
 	int32_t MultiTexBlendType;
+	::Effekseer::TextureFilterType		BlendTextureFilterType;
+	::Effekseer::TextureWrapType		BlendTextureWrapType;
 
 	EffectNodeSprite( Effect* effect, unsigned char*& pos )
 		: EffectNodeImplemented(effect, pos)

@@ -89,6 +89,8 @@ protected:
 		}
 
 		state.MultiTexBlendType = param.MultiTexBlendType;
+		state.BlendTextureFilterType = param.BlendTextureFilterType;
+		state.BlendTextureWrapType = param.BlendTextureWrapType;
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 

@@ -105,6 +105,8 @@ protected:
 		}
 
 		state.MultiTexBlendType = param.MultiTexBlendType;
+		//state.BlendTextureFilterType = param.BlendTextureFilterType;
+		//state.BlendTextureWrapType = param.BlendTextureWrapType;
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 		renderer->GetStandardRenderer()->BeginRenderingAndRenderingIfRequired(count * vertexCount, m_ringBufferOffset, (void*&) m_ringBufferData);

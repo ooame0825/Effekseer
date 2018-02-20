@@ -45,6 +45,8 @@ public:
 		bool				IsDepthOffsetScaledWithParticleScale;
 
 		int32_t				MultiTexBlendType;
+		::Effekseer::TextureFilterType		BlendTextureFilterType;
+		::Effekseer::TextureWrapType		BlendTextureWrapType;
 	};
 
 	struct InstanceParameter
