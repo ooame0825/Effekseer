@@ -207,6 +207,8 @@ void EffectNodeRing::BeginRendering(int32_t count, Manager* manager)
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
 
 		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
+		nodeParameter.BlendTextureFilterType = RendererCommon.BlendFilterType;
+		nodeParameter.BlendTextureWrapType = RendererCommon.BlendWrapType;
 
 		renderer->BeginRendering( nodeParameter, count, m_userData );
 	}
@@ -247,6 +249,8 @@ void EffectNodeRing::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
 
 		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
+		nodeParameter.BlendTextureFilterType = RendererCommon.BlendFilterType;
+		nodeParameter.BlendTextureWrapType = RendererCommon.BlendWrapType;
 
 		color _outerColor;
 		color _centerColor;
@@ -288,6 +292,7 @@ void EffectNodeRing::Rendering(const Instance& instance, Manager* manager)
 		}
 		
 		instanceParameter.UV = instance.GetUV();
+		instanceParameter.BlendUV = instance.GetBlendUV();
 		renderer->Rendering( nodeParameter, instanceParameter, m_userData );
 	}
 }
@@ -325,6 +330,8 @@ void EffectNodeRing::EndRendering(Manager* manager)
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
 
 		nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
+		nodeParameter.BlendTextureFilterType = RendererCommon.BlendFilterType;
+		nodeParameter.BlendTextureWrapType = RendererCommon.BlendWrapType;
 
 		renderer->EndRendering( nodeParameter, m_userData );
 	}

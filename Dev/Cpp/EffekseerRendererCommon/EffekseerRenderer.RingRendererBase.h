@@ -105,8 +105,8 @@ protected:
 		}
 
 		state.MultiTexBlendType = param.MultiTexBlendType;
-		//state.BlendTextureFilterType = param.BlendTextureFilterType;
-		//state.BlendTextureWrapType = param.BlendTextureWrapType;
+		state.BlendTextureFilterType = param.BlendTextureFilterType;
+		state.BlendTextureWrapType = param.BlendTextureWrapType;
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 		renderer->GetStandardRenderer()->BeginRenderingAndRenderingIfRequired(count * vertexCount, m_ringBufferOffset, (void*&) m_ringBufferData);
@@ -161,9 +161,17 @@ protected:
 		const float v1 = instanceParameter.UV.Y;
 		const float v2 = v1 + instanceParameter.UV.Height * 0.5f;
 		const float v3 = v1 + instanceParameter.UV.Height;
+
+		// BlendUV
+		float blendTexCurrent = instanceParameter.BlendUV.X;
+		const float blendTexStep = instanceParameter.BlendUV.Width / parameter.VertexCount;
+		const float vv1 = instanceParameter.BlendUV.Y;
+		const float vv2 = vv1 + instanceParameter.BlendUV.Height * 0.5f;
+		const float vv3 = vv1 + instanceParameter.BlendUV.Height;
 		
 		::Effekseer::Vector3D outerNext, innerNext, centerNext;
 		float texNext;
+		float blendTexNext;
 
 		for( int i = 0; i < vertexCount; i += 8 )
 		{
@@ -186,27 +194,36 @@ protected:
 			centerNext.Z = centerHeight;
 
 			texNext = texCurrent + texStep;
+			blendTexNext = blendTexCurrent + blendTexStep;
 			
 			VERTEX* v = &verteies[i];
 			v[0].Pos = outerCurrent;
 			v[0].SetColor( outerColor );
 			v[0].UV[0] = texCurrent;
 			v[0].UV[1] = v1;
+			v[0].UV[2] = blendTexCurrent;
+			v[0].UV[3] = vv1;
 
 			v[1].Pos = centerCurrent;
 			v[1].SetColor( centerColor );
 			v[1].UV[0] = texCurrent;
 			v[1].UV[1] = v2;
+			v[1].UV[2] = blendTexCurrent;
+			v[1].UV[3] = vv2;
 
 			v[2].Pos = outerNext;
 			v[2].SetColor( outerColor );
 			v[2].UV[0] = texNext;
 			v[2].UV[1] = v1;
+			v[2].UV[2] = blendTexNext;
+			v[2].UV[3] = vv1;
 			
 			v[3].Pos = centerNext;
 			v[3].SetColor( centerColor );
 			v[3].UV[0] = texNext;
 			v[3].UV[1] = v2;
+			v[3].UV[2] = blendTexNext;
+			v[3].UV[3] = vv2;
 
 			v[4] = v[1];
 
@@ -214,6 +231,8 @@ protected:
 			v[5].SetColor( innerColor );
 			v[5].UV[0] = texCurrent;
 			v[5].UV[1] = v3;
+			v[5].UV[2] = blendTexCurrent;
+			v[5].UV[3] = vv3;
 
 			v[6] = v[3];
 
@@ -221,6 +240,8 @@ protected:
 			v[7].SetColor( innerColor );
 			v[7].UV[0] = texNext;
 			v[7].UV[1] = v3;
+			v[7].UV[2] = blendTexNext;
+			v[7].UV[3] = vv3;
 
 			// 歪み処理
 			if (sizeof(VERTEX) == sizeof(VERTEX_DISTORTION))
@@ -281,6 +302,7 @@ protected:
 			innerCurrent = innerNext;
 			centerCurrent = centerNext;
 			texCurrent = texNext;
+			blendTexCurrent = blendTexNext;
 		}
 
 		if( parameter.Billboard == ::Effekseer::BillboardType::Billboard ||

@@ -231,6 +231,8 @@ void EffectNodeSprite::Rendering(const Instance& instance, Manager* manager)
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
 
 		nodeParameter.MultiTexBlendType = MultiTexBlendType;
+		nodeParameter.BlendTextureFilterType = BlendTextureFilterType;
+		nodeParameter.BlendTextureWrapType = BlendTextureWrapType;
 
 		SpriteRenderer::InstanceParameter instanceParameter;
 		instValues._color.setValueToArg( instanceParameter.AllColor );
@@ -332,6 +334,10 @@ void EffectNodeSprite::EndRendering(Manager* manager)
 		nodeParameter.DepthOffset = DepthValues.DepthOffset;
 		nodeParameter.IsDepthOffsetScaledWithCamera = DepthValues.IsDepthOffsetScaledWithCamera;
 		nodeParameter.IsDepthOffsetScaledWithParticleScale = DepthValues.IsDepthOffsetScaledWithParticleScale;
+
+		nodeParameter.MultiTexBlendType = MultiTexBlendType;
+		nodeParameter.BlendTextureFilterType = BlendTextureFilterType;
+		nodeParameter.BlendTextureWrapType = BlendTextureWrapType;
 
 		renderer->EndRendering( nodeParameter, m_userData );
 	}
