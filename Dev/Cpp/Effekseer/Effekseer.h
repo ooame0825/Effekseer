@@ -2442,6 +2442,7 @@ public:
 		float	SizeBack;
 
 		RectF	UV;
+		RectF	BlendUV;
 	};
 
 public:

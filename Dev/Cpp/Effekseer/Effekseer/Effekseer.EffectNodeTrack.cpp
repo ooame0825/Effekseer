@@ -96,6 +96,8 @@ void EffectNodeTrack::BeginRendering(int32_t count, Manager* manager)
 		m_nodeParameter.DistortionIntensity = RendererCommon.DistortionIntensity;
 
 		m_nodeParameter.MultiTexBlendType = RendererCommon.MultiTexBlendType;
+		m_nodeParameter.BlendTextureFilterType = RendererCommon.BlendFilterType;
+		m_nodeParameter.BlendTextureWrapType = RendererCommon.BlendWrapType;
 
 		renderer->BeginRendering( m_nodeParameter, count, m_userData );
 	}
@@ -118,6 +120,7 @@ void EffectNodeTrack::BeginRenderingGroup(InstanceGroup* group, Manager* manager
 		if (group->GetFirst() != nullptr)
 		{
 			m_instanceParameter.UV = group->GetFirst()->GetUV();
+			m_instanceParameter.BlendUV = group->GetFirst()->GetBlendUV();
 		}
 		
 		/*

@@ -110,6 +110,8 @@ protected:
 		}
 
 		state.MultiTexBlendType = param.MultiTexBlendType;
+		state.BlendTextureFilterType = param.BlendTextureFilterType;
+		state.BlendTextureWrapType = param.BlendTextureWrapType;
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 
@@ -222,6 +224,16 @@ protected:
 
 		v[2].UV[0] = instanceParameter.UV.X + instanceParameter.UV.Width;
 		v[2].UV[1] = instanceParameter.UV.Y + percent * instanceParameter.UV.Height;
+
+		// BlendUV
+		v[0].UV[2] = instanceParameter.BlendUV.X;
+		v[0].UV[3] = instanceParameter.BlendUV.Y + percent * instanceParameter.BlendUV.Height;
+
+		v[1].UV[2] = instanceParameter.BlendUV.X + instanceParameter.BlendUV.Width * 0.5f;
+		v[1].UV[3] = instanceParameter.BlendUV.Y + percent * instanceParameter.BlendUV.Height;
+
+		v[2].UV[2] = instanceParameter.BlendUV.X + instanceParameter.BlendUV.Width;
+		v[2].UV[3] = instanceParameter.BlendUV.Y + percent * instanceParameter.BlendUV.Height;
 
 		v[1].Pos.X = param.SRTMatrix43.Value[3][0];
 		v[1].Pos.Y = param.SRTMatrix43.Value[3][1];

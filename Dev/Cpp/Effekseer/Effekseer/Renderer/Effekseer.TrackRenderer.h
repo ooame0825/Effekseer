@@ -41,6 +41,8 @@ public:
 		float				DistortionIntensity;
 
 		int					MultiTexBlendType;
+		::Effekseer::TextureFilterType		BlendTextureFilterType;
+		::Effekseer::TextureWrapType		BlendTextureWrapType;
 	};
 
 	struct InstanceGroupParameter
@@ -67,6 +69,7 @@ public:
 		float	SizeBack;
 
 		RectF	UV;
+		RectF	BlendUV;
 	};
 
 public:
