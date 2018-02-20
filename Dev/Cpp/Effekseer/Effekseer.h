@@ -2173,6 +2173,8 @@ public:
 		float				DistortionIntensity;
 
 		int					MultiTexBlendType;
+		::Effekseer::TextureFilterType		BlendTextureFilterType;
+		::Effekseer::TextureWrapType		BlendTextureWrapType;
 	};
 
 	struct InstanceParameter
@@ -2188,6 +2190,7 @@ public:
 		float	Positions[2];
 
 		RectF	UV;
+		RectF   BlendUV;
 	};
 
 public:
@@ -2341,6 +2344,8 @@ public:
 		bool				IsDepthOffsetScaledWithParticleScale;
 
 		int					MultiTexBlendType;
+		::Effekseer::TextureFilterType		BlendTextureFilterType;
+		::Effekseer::TextureWrapType		BlendTextureWrapType;
 	};
 
 	struct InstanceParameter
@@ -2409,6 +2414,8 @@ public:
 		float				DistortionIntensity;
 
 		int					MultiTexBlendType;
+		::Effekseer::TextureFilterType		BlendTextureFilterType;
+		::Effekseer::TextureWrapType		BlendTextureWrapType;
 	};
 
 	struct InstanceGroupParameter

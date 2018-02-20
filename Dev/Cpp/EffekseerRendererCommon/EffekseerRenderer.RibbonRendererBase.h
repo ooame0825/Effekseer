@@ -97,6 +97,8 @@ protected:
 		}
 
 		state.MultiTexBlendType = param.MultiTexBlendType;
+		state.BlendTextureFilterType = param.BlendTextureFilterType;
+		state.BlendTextureWrapType = param.BlendTextureWrapType;
 
 		renderer->GetStandardRenderer()->UpdateStateAndRenderingIfRequired(state);
 
@@ -141,6 +143,12 @@ protected:
 	
 		verteies[1].UV[0] = instanceParameter.UV.X + instanceParameter.UV.Width;
 		verteies[1].UV[1] = instanceParameter.UV.Y + percent * instanceParameter.UV.Height;
+
+		verteies[0].UV[2] = instanceParameter.BlendUV.X;
+		verteies[0].UV[3] = instanceParameter.BlendUV.Y + percent * instanceParameter.BlendUV.Height;
+
+		verteies[1].UV[2] = instanceParameter.BlendUV.X + instanceParameter.BlendUV.Width;
+		verteies[1].UV[3] = instanceParameter.BlendUV.Y + percent * instanceParameter.BlendUV.Height;
 		
 		if( parameter.ViewpointDependent)
 		{
