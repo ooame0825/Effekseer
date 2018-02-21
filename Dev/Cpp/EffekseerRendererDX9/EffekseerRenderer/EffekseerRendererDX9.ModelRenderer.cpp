@@ -139,7 +139,7 @@ ModelRenderer::ModelRenderer(
 	shaders[3] = m_shader_lighting;
 	shaders[4] = m_shader_texture;
 	shaders[5] = m_shader;
-	
+
 	for( int32_t i = 0; i < 6; i++ )
 	{
 		shaders[i]->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>));
@@ -207,45 +207,45 @@ ModelRenderer* ModelRenderer::Create( RendererImplemented* renderer )
 
 	Shader* shader_lighting_texture_normal = Shader::Create( 
 		renderer, 
-		ShaderLightingTextureNormal_::g_vs20_VS,
-		sizeof(ShaderLightingTextureNormal_::g_vs20_VS),
-		ShaderLightingTextureNormal_::g_ps20_PS,
-		sizeof(ShaderLightingTextureNormal_::g_ps20_PS),
+		ShaderLightingTextureNormal_::g_vs30_VS,
+		sizeof(ShaderLightingTextureNormal_::g_vs30_VS),
+		ShaderLightingTextureNormal_::g_ps30_PS,
+		sizeof(ShaderLightingTextureNormal_::g_ps30_PS),
 		"ModelRendererLightingTextureNormal", 
 		decl );
 
 	Shader* shader_lighting_normal = Shader::Create( 
 		renderer, 
-		ShaderLightingNormal_::g_vs20_VS,
-		sizeof(ShaderLightingNormal_::g_vs20_VS),
-		ShaderLightingNormal_::g_ps20_PS,
-		sizeof(ShaderLightingNormal_::g_ps20_PS),
+		ShaderLightingNormal_::g_vs30_VS,
+		sizeof(ShaderLightingNormal_::g_vs30_VS),
+		ShaderLightingNormal_::g_ps30_PS,
+		sizeof(ShaderLightingNormal_::g_ps30_PS),
 		"ModelRendererLightingNormal", 
 		decl );
 
 
 	Shader* shader_lighting_texture = Shader::Create( 
 		renderer, 
-		ShaderLightingTexture_::g_vs20_VS,
-		sizeof(ShaderLightingTexture_::g_vs20_VS),
-		ShaderLightingTexture_::g_ps20_PS,
-		sizeof(ShaderLightingTexture_::g_ps20_PS),
+		ShaderLightingTexture_::g_vs30_VS,
+		sizeof(ShaderLightingTexture_::g_vs30_VS),
+		ShaderLightingTexture_::g_ps30_PS,
+		sizeof(ShaderLightingTexture_::g_ps30_PS),
 		"ModelRendererLightingTexture", 
 		decl );
 
 	Shader* shader_lighting = Shader::Create( 
 		renderer, 
-		ShaderLighting_::g_vs20_VS,
-		sizeof(ShaderLighting_::g_vs20_VS),
-		ShaderLighting_::g_ps20_PS,
-		sizeof(ShaderLighting_::g_ps20_PS),
+		ShaderLighting_::g_vs30_VS,
+		sizeof(ShaderLighting_::g_vs30_VS),
+		ShaderLighting_::g_ps30_PS,
+		sizeof(ShaderLighting_::g_ps30_PS),
 		"ModelRendererLighting", 
 		decl );
 
 	Shader* shader_texture = Shader::Create( 
 		renderer, 
-		ShaderTexture_::g_vs20_VS,
-		sizeof(ShaderTexture_::g_vs20_VS),
+		ShaderTexture_::g_vs30_VS,
+		sizeof(ShaderTexture_::g_vs30_VS),
 		ShaderTexture_::g_ps30_PS,
 		sizeof(ShaderTexture_::g_ps30_PS),
 		"ModelRendererTexture", 
@@ -253,8 +253,8 @@ ModelRenderer* ModelRenderer::Create( RendererImplemented* renderer )
 
 	Shader* shader = Shader::Create( 
 		renderer, 
-		Shader_::g_vs20_VS,
-		sizeof(Shader_::g_vs20_VS),
+		Shader_::g_vs30_VS,
+		sizeof(Shader_::g_vs30_VS),
 		Shader_::g_ps30_PS,
 		sizeof(Shader_::g_ps30_PS),
 		"ModelRenderer", 

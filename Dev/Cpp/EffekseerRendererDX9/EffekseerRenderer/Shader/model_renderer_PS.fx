@@ -19,7 +19,7 @@ sampler2D	g_normalSampler		: register( s4 );
 
 struct PS_Input
 {
-	float2 UV		: TEXCOORD0;
+	float4 UV		: TEXCOORD0;
 #if ENABLE_NORMAL_TEXTURE
 	half3 Normal	: TEXCOORD1;
 	half3 Binormal	: TEXCOORD2;
@@ -33,7 +33,7 @@ float4 PS( const PS_Input Input ) : COLOR
 	float diffuse = 1.0;
 
 #if ENABLE_LIGHTING && ENABLE_NORMAL_TEXTURE
-	half3 texNormal = (tex2D(g_normalSampler, Input.UV).xyz  - 0.5) * 2.0;
+	half3 texNormal = (tex2D(g_normalSampler, Input.UV.xy).xyz  - 0.5) * 2.0;
 	half3 localNormal = (half3)normalize(
 		mul(
 		texNormal,
@@ -46,7 +46,7 @@ float4 PS( const PS_Input Input ) : COLOR
 #endif
 
 #ifdef ENABLE_COLOR_TEXTURE
-	float4 Output = tex2D(g_colorSampler[0], Input.UV) * Input.Color;
+	float4 Output = tex2D(g_colorSampler[0], Input.UV.xy) * Input.Color;
 	Output.xyz = Output.xyz * diffuse;
 
 	float4 BlendTexture = float4(0,0,0,0);
@@ -62,20 +62,20 @@ float4 PS( const PS_Input Input ) : COLOR
 			// αテクスチャ有
 			if (i == 0)
 			{
-				Output.a = tex2D(g_colorSampler[i + 1], Input.UV).a;
+				Output.a = tex2D(g_colorSampler[i + 1], Input.UV.xy).a;
 			}
 
 			// 合成画像有
 			if (i == 1)
 			{
-				BlendTexture = tex2D(g_colorSampler[i + 1], Input.UV);
+				BlendTexture = tex2D(g_colorSampler[i + 1], Input.UV.xy);
 				BlendEnable = true;
 			}
 
 			// 合成画像αテクスチャ有
 			if (BlendEnable == true && i == 2)
 			{
-				BlendTexture.a = tex2D(g_colorSampler[i + 1], Input.UV).a;
+				BlendTexture.a = tex2D(g_colorSampler[i + 1], Input.UV.xy).a;
 			}
 		}
 	}

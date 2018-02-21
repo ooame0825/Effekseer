@@ -1,12 +1,12 @@
 
 float4x4 mCameraProj		: register( c0 );
-float4x4 mModel[40]		: register( c4 );
-float4	fUV[40]			: register( c164 );
+float4x4 mModel[40]			: register( c4 );
+float4	fUV[40]				: register( c164 );
 float4	fModelColor[40]		: register( c204 );
 
 #ifdef ENABLE_LIGHTING
 float4	fLightDirection		: register( c244 );
-float4	fLightColor		: register( c245 );
+float4	fLightColor			: register( c245 );
 float4	fLightAmbient		: register( c246 );
 #endif
 
@@ -39,6 +39,7 @@ VS_Output VS( const VS_Input Input )
 {
 	float4x4 matModel = mModel[Input.Index.x];
 	float4 uv = fUV[Input.Index.x];
+	//float4 blenduv = fBlendUV[Input.Index.x];
 	float4 modelColor = fModelColor[Input.Index.x] * Input.Color;
 
 	VS_Output Output = (VS_Output)0;
@@ -48,6 +49,8 @@ VS_Output VS( const VS_Input Input )
 
 	Output.UV.x = Input.UV.x * uv.z + uv.x;
 	Output.UV.y = Input.UV.y * uv.w + uv.y;
+	//Output.UV.z = Input.UV.z * blenduv.z + blenduv.x;
+	//Output.UV.w = Input.UV.w * blenduv.w + blenduv.y;
 
 #if ENABLE_LIGHTING
 	float3x3 lightMat = (float3x3)matModel;

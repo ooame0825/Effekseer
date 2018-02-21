@@ -56,6 +56,7 @@ private:
 protected:
 	std::vector<Effekseer::Matrix44>	m_matrixes;
 	std::vector<Effekseer::RectF>		m_uv;
+	std::vector<Effekseer::RectF>		m_blenduv;
 	std::vector<Effekseer::Color>		m_colors;
 	std::vector<int32_t>				m_times;
 
@@ -88,6 +89,7 @@ public:
 	{
 		m_matrixes.clear();
 		m_uv.clear();
+		m_blenduv.clear();
 		m_colors.clear();
 		m_times.clear();
 
@@ -230,6 +232,7 @@ public:
 
 		m_matrixes.push_back(mat44);
 		m_uv.push_back(instanceParameter.UV);
+		m_blenduv.push_back(instanceParameter.BlendUV);
 		m_colors.push_back(instanceParameter.AllColor);
 		m_times.push_back(instanceParameter.Time);
 	}
@@ -388,6 +391,11 @@ public:
 		state.TextureFilterTypes[1] = param.TextureFilter;
 		state.TextureWrapTypes[1] = param.TextureWrap;
 
+		state.TextureFilterTypes[2] = param.BlendTextureFilterType;
+		state.TextureWrapTypes[2]	= param.BlendTextureWrapType;
+		state.TextureFilterTypes[3] = param.BlendTextureFilterType;
+		state.TextureWrapTypes[3]	= param.BlendTextureWrapType;
+
 		renderer->GetRenderState()->Update(distortion);
 
 		ModelRendererVertexConstantBuffer<InstanceCount>* vcb = (ModelRendererVertexConstantBuffer<InstanceCount>*)shader_->GetVertexConstantBuffer();
@@ -464,6 +472,11 @@ public:
 					vcb->ModelUV[num][2] = m_uv[loop+num].Width;
 					vcb->ModelUV[num][3] = m_uv[loop+num].Height;
 
+					//vcb->ModelUV[num][4] = m_blenduv[loop + num].X;
+					//vcb->ModelUV[num][5] = m_blenduv[loop + num].Y;
+					//vcb->ModelUV[num][6] = m_blenduv[loop + num].Width;
+					//vcb->ModelUV[num][7] = m_blenduv[loop + num].Height;
+
 					ColorToFloat4(m_colors[loop+num],vcb->ModelColor[num]);
 				}
 
@@ -491,6 +504,11 @@ public:
 				vcb->ModelUV[0][1] = m_uv[loop].Y;
 				vcb->ModelUV[0][2] = m_uv[loop].Width;
 				vcb->ModelUV[0][3] = m_uv[loop].Height;
+
+				//vcb->ModelUV[num][4] = m_blenduv[loop].X;
+				//vcb->ModelUV[num][5] = m_blenduv[loop].Y;
+				//vcb->ModelUV[num][6] = m_blenduv[loop].Width;
+				//vcb->ModelUV[num][7] = m_blenduv[loop].Height;
 
 				// DepthOffset
 				ApplyDepthOffset(vcb->ModelMatrix[0], camera, param.DepthOffset, param.IsDepthOffsetScaledWithCamera, param.IsDepthOffsetScaledWithParticleScale, param.IsRightHand);

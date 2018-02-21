@@ -2352,6 +2352,7 @@ public:
 	{
 		Matrix43		SRTMatrix43;
 		RectF			UV;
+		RectF			BlendUV;
 		Color			AllColor;
 		int32_t			Time;
 	};
