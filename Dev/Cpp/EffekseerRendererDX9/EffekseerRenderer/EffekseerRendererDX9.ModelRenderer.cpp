@@ -140,10 +140,12 @@ ModelRenderer::ModelRenderer(
 	shaders[4] = m_shader_texture;
 	shaders[5] = m_shader;
 
+	const int modelNum = 20;
+
 	for( int32_t i = 0; i < 6; i++ )
 	{
-		shaders[i]->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>));
-		shaders[i]->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>)/(sizeof(float)*4));
+		shaders[i]->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<modelNum>));
+		shaders[i]->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<modelNum>)/(sizeof(float)*4));
 		if (i == 0 || i == 2 || i == 4)
 		{
 			shaders[i]->SetPixelConstantBufferSize(sizeof(float) * 4 * 7);
@@ -156,13 +158,13 @@ ModelRenderer::ModelRenderer(
 		}
 	}
 
-	m_shader_distortion_texture->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>));
-	m_shader_distortion_texture->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>) / (sizeof(float) * 4));
+	m_shader_distortion_texture->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<modelNum>));
+	m_shader_distortion_texture->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<modelNum>) / (sizeof(float) * 4));
 	m_shader_distortion_texture->SetPixelConstantBufferSize(sizeof(float) * 4);
 	m_shader_distortion_texture->SetPixelRegisterCount(1);
 
-	m_shader_distortion->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>));
-	m_shader_distortion->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<40>) / (sizeof(float) * 4));
+	m_shader_distortion->SetVertexConstantBufferSize(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<modelNum>));
+	m_shader_distortion->SetVertexRegisterCount(sizeof(::EffekseerRenderer::ModelRendererVertexConstantBuffer<modelNum>) / (sizeof(float) * 4));
 	m_shader_distortion->SetPixelConstantBufferSize(sizeof(float) * 4);
 	m_shader_distortion->SetPixelRegisterCount(1);
 }
@@ -195,13 +197,13 @@ ModelRenderer* ModelRenderer::Create( RendererImplemented* renderer )
 	// 座標(3) 法線(3)*3 UV(2)
 	D3DVERTEXELEMENT9 decl[] =
 	{
-		{0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_POSITION,	0},
-		{0,	12,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,	0},
-		{0,	24,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,	1},
-		{0,	36,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,	2},
-		{0,	48,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_TEXCOORD,	0},
-		{0, 56, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 3 },
-		{0,	60,	D3DDECLTYPE_UBYTE4,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_BLENDINDICES,	0},
+		{ 0,	0,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_POSITION,		0 },
+		{ 0,	12,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,		0 },
+		{ 0,	24,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,		1 },
+		{ 0,	36,	D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,		2 },
+		{ 0,	48,	D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_TEXCOORD,		0 },
+		{ 0,	56, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_NORMAL,		3 },
+		{ 0,	60,	D3DDECLTYPE_UBYTE4,		D3DDECLMETHOD_DEFAULT,	D3DDECLUSAGE_BLENDINDICES,	0 },
 		D3DDECL_END()
 	};
 
@@ -333,7 +335,7 @@ void ModelRenderer::EndRendering( const efkModelNodeParam& parameter, void* user
 		Shader,
 		Model,
 		true,
-		40>(
+		20>(
 		m_renderer,
 		m_shader_lighting_texture_normal,
 		m_shader_lighting_normal,

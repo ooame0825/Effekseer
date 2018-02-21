@@ -1,32 +1,33 @@
 
 float4x4 mCameraProj		: register( c0 );
-float4x4 mModel[40]			: register( c4 );
-float4	fUV[40]				: register( c164 );
-float4	fModelColor[40]		: register( c204 );
+float4x4 mModel[20]			: register( c4 );
+float4	fUV[20]				: register( c84 );
+float4	fBlendUV[20]		: register(c104);
+float4	fModelColor[20]		: register( c124 );
 
 #ifdef ENABLE_LIGHTING
-float4	fLightDirection		: register( c244 );
-float4	fLightColor			: register( c245 );
-float4	fLightAmbient		: register( c246 );
+float4	fLightDirection		: register( c144 );
+float4	fLightColor			: register( c145 );
+float4	fLightAmbient		: register( c146 );
 #endif
 
 
 struct VS_Input
 {
-	float3 Pos		: POSITION0;
+	float3 Pos			: POSITION0;
 	float3 Normal		: NORMAL0;
 	float3 Binormal		: NORMAL1;
 	float3 Tangent		: NORMAL2;
-	float2 UV		: TEXCOORD0;
+	float2 UV			: TEXCOORD0;
 	float4 Color		: NORMAL3;
-	uint4 Index		: BLENDINDICES0;
+	uint4 Index			: BLENDINDICES0;
 
 };
 
 struct VS_Output
 {
-	float4 Pos		: POSITION0;
-	float2 UV		: TEXCOORD0;
+	float4 Pos			: POSITION0;
+	float4 UV			: TEXCOORD0;
 #if ENABLE_NORMAL_TEXTURE
 	 half3 Normal		: TEXCOORD1;
 	half3 Binormal		: TEXCOORD2;
@@ -39,7 +40,7 @@ VS_Output VS( const VS_Input Input )
 {
 	float4x4 matModel = mModel[Input.Index.x];
 	float4 uv = fUV[Input.Index.x];
-	//float4 blenduv = fBlendUV[Input.Index.x];
+	float4 blenduv = fBlendUV[Input.Index.x];
 	float4 modelColor = fModelColor[Input.Index.x] * Input.Color;
 
 	VS_Output Output = (VS_Output)0;
@@ -49,8 +50,8 @@ VS_Output VS( const VS_Input Input )
 
 	Output.UV.x = Input.UV.x * uv.z + uv.x;
 	Output.UV.y = Input.UV.y * uv.w + uv.y;
-	//Output.UV.z = Input.UV.z * blenduv.z + blenduv.x;
-	//Output.UV.w = Input.UV.w * blenduv.w + blenduv.y;
+	Output.UV.z = Input.UV.x * blenduv.z + blenduv.x;
+	Output.UV.w = Input.UV.y * blenduv.w + blenduv.y;
 
 #if ENABLE_LIGHTING
 	float3x3 lightMat = (float3x3)matModel;

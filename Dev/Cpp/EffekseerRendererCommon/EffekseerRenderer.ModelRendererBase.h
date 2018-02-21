@@ -33,6 +33,7 @@ struct ModelRendererVertexConstantBuffer
 	Effekseer::Matrix44		CameraMatrix;
 	Effekseer::Matrix44		ModelMatrix[MODEL_COUNT];
 	float	ModelUV[MODEL_COUNT][4];
+	float	ModelBlendUV[MODEL_COUNT][4];
 	float	ModelColor[MODEL_COUNT][4];
 
 	float	LightDirection[4];
@@ -472,10 +473,10 @@ public:
 					vcb->ModelUV[num][2] = m_uv[loop+num].Width;
 					vcb->ModelUV[num][3] = m_uv[loop+num].Height;
 
-					//vcb->ModelUV[num][4] = m_blenduv[loop + num].X;
-					//vcb->ModelUV[num][5] = m_blenduv[loop + num].Y;
-					//vcb->ModelUV[num][6] = m_blenduv[loop + num].Width;
-					//vcb->ModelUV[num][7] = m_blenduv[loop + num].Height;
+					vcb->ModelBlendUV[num][0] = m_blenduv[loop + num].X;
+					vcb->ModelBlendUV[num][1] = m_blenduv[loop + num].Y;
+					vcb->ModelBlendUV[num][2] = m_blenduv[loop + num].Width;
+					vcb->ModelBlendUV[num][3] = m_blenduv[loop + num].Height;
 
 					ColorToFloat4(m_colors[loop+num],vcb->ModelColor[num]);
 				}
@@ -505,10 +506,10 @@ public:
 				vcb->ModelUV[0][2] = m_uv[loop].Width;
 				vcb->ModelUV[0][3] = m_uv[loop].Height;
 
-				//vcb->ModelUV[num][4] = m_blenduv[loop].X;
-				//vcb->ModelUV[num][5] = m_blenduv[loop].Y;
-				//vcb->ModelUV[num][6] = m_blenduv[loop].Width;
-				//vcb->ModelUV[num][7] = m_blenduv[loop].Height;
+				vcb->ModelBlendUV[0][0] = m_blenduv[loop].X;
+				vcb->ModelBlendUV[0][1] = m_blenduv[loop].Y;
+				vcb->ModelBlendUV[0][2] = m_blenduv[loop].Width;
+				vcb->ModelBlendUV[0][3] = m_blenduv[loop].Height;
 
 				// DepthOffset
 				ApplyDepthOffset(vcb->ModelMatrix[0], camera, param.DepthOffset, param.IsDepthOffsetScaledWithCamera, param.IsDepthOffsetScaledWithParticleScale, param.IsRightHand);

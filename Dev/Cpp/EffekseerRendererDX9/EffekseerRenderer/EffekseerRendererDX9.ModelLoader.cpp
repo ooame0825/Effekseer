@@ -55,7 +55,7 @@ void* ModelLoader::Load( const EFK_CHAR* path )
 
 		auto model = new Model( data_model, size_model );
 
-		model->ModelCount = Effekseer::Min( Effekseer::Max( model->GetModelCount(), 1 ), 40);
+		model->ModelCount = Effekseer::Min( Effekseer::Max( model->GetModelCount(), 1 ), 20);
 
 		model->InternalModels = new Model::InternalModel[model->GetFrameCount()];
 

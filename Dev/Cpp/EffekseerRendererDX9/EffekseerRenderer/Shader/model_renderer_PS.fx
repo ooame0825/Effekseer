@@ -68,14 +68,14 @@ float4 PS( const PS_Input Input ) : COLOR
 			// 合成画像有
 			if (i == 1)
 			{
-				BlendTexture = tex2D(g_colorSampler[i + 1], Input.UV.xy);
+				BlendTexture = tex2D(g_colorSampler[i + 1], Input.UV.zw);
 				BlendEnable = true;
 			}
 
 			// 合成画像αテクスチャ有
 			if (BlendEnable == true && i == 2)
 			{
-				BlendTexture.a = tex2D(g_colorSampler[i + 1], Input.UV.xy).a;
+				BlendTexture.a = tex2D(g_colorSampler[i + 1], Input.UV.zw).a;
 			}
 		}
 	}
