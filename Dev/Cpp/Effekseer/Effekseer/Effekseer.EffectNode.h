@@ -465,7 +465,7 @@ private:
 	static const int MAX_TEXTURE_SUM = 4;
 
 public:
-	int32_t				TextureIndex[MAX_TEXTURE_SUM] = { -1 };
+	int32_t				TextureIndex[MAX_TEXTURE_SUM];
 
 	AlphaBlendType		AlphaBlend;
 
