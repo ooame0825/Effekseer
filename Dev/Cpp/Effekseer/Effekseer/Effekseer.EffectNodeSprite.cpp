@@ -145,6 +145,11 @@ namespace Effekseer
 		BlendTextureFilterType = RendererCommon.BlendFilterType;
 		BlendTextureWrapType = RendererCommon.BlendWrapType;
 	}
+	else
+	{
+		BlendTextureFilterType = ::Effekseer::TextureFilterType::Linear;
+		BlendTextureWrapType = ::Effekseer::TextureWrapType::Repeat;
+	}
 
 	// 右手系左手系変換
 	if (setting->GetCoordinateSystem() == CoordinateSystem::LH)

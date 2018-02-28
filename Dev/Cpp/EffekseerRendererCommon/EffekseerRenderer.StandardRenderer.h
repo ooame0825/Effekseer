@@ -51,7 +51,7 @@ public:
 		CullingType = ::Effekseer::CullingType::Front;
 		TextureFilterType = BlendTextureFilterType = ::Effekseer::TextureFilterType::Nearest;
 		TextureWrapType = BlendTextureWrapType = ::Effekseer::TextureWrapType::Repeat;
-		for (auto it : TexturePtr)
+		for (auto& it : TexturePtr)
 		{
 			it = nullptr;
 		}
@@ -161,7 +161,7 @@ public:
 		Rendering();
 
 		// It is always initialized with the next drawing.
-		for (auto it : m_state.TexturePtr)
+		for (auto& it : m_state.TexturePtr)
 		{
 			it = (Effekseer::TextureData*)0x1;
 		}
