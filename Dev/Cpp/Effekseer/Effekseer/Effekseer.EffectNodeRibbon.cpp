@@ -106,6 +106,11 @@ void EffectNodeRibbon::LoadRendererParameter(unsigned char*& pos, Setting* setti
 	{
 		memcpy( &RibbonTexture, pos, sizeof(int) );
 		pos += sizeof(int);
+
+		for (int i = 1; i < MAX_TEXTURE_SUM; i++)
+		{
+			RendererCommon.TextureIndex[i] = -1;
+		}
 	}
 
 	// 右手系左手系変換

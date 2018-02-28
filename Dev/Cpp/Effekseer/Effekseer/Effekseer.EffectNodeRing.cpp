@@ -78,6 +78,11 @@ void EffectNodeRing::LoadRendererParameter(unsigned char*& pos, Setting* setting
 	{
 		memcpy( &RingTexture, pos, sizeof(int) );
 		pos += sizeof(int);
+
+		for (int i = 1; i < MAX_TEXTURE_SUM; i++)
+		{
+			RendererCommon.TextureIndex[i] = -1;
+		}
 	}
 	
 	// 右手系左手系変換

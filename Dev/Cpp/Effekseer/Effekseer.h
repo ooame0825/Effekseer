@@ -1452,6 +1452,8 @@ struct EffectBasicRenderParameter
 	bool				Distortion;
 	float				DistortionIntensity;
 	int					MultiTexBlendType;
+	TextureFilterType	BlendFilterType;
+	TextureWrapType		BlendWrapType;
 };
 
 /**

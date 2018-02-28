@@ -598,6 +598,9 @@ EffectBasicRenderParameter EffectNodeImplemented::GetBasicRenderParameter()
 	param.WrapType = RendererCommon.WrapType;
 	param.ZTest = RendererCommon.ZTest;
 	param.ZWrite = RendererCommon.ZWrite;
+	param.MultiTexBlendType = RendererCommon.MultiTexBlendType;
+	param.BlendFilterType = RendererCommon.BlendFilterType;
+	param.BlendWrapType = RendererCommon.BlendWrapType;
 	return param;
 }
 

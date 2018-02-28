@@ -113,6 +113,11 @@ namespace Effekseer
 		memcpy(&SpriteTexture, pos, sizeof(int));
 		pos += sizeof(int);
 		RendererCommon.TextureIndex[0] = SpriteTexture[0];
+		
+		for (int i = 1; i < MAX_TEXTURE_SUM; i++)
+		{
+			RendererCommon.TextureIndex[i] = -1;
+		}
 	}
 
 	// オリジナルバージョンによる追加機能 : マルチテクスチャの取得
